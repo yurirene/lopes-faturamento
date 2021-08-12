@@ -21,21 +21,18 @@
                 @endif
                 <div class="form-group">
                 {!! Form::label('tipo', 'Tipo') !!} <span class="text-danger">*</span>
-                {!! Form::select('tipo', ['' => ''], null, ['class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::select('tipo', $tipos, null, ['class' => 'form-control', 'required' => 'required']) !!}
                 </div>
 
                 <div class="form-group">
-                {!! Form::label('referencia', 'E-mail para Login') !!} <span class="text-danger">*</span>
-                {!! Form::text('referencia', null, ['class' => 'form-control is_referencia', 'required' => 'required', 'autocomplete' => 'off']) !!}
+                {!! Form::label('referencia', 'Mês de Referência') !!} <span class="text-danger">*</span>
+                {!! Form::text('referencia', null, ['class' => 'form-control is_referencia', 'required' => 'required', 'autocomplete' => 'off', 'placeholder' => '01/2000']) !!}
                 </div>
 
-                <label>Arquivo</label>
+                <label>Arquivo</label> <span class="text-danger">*</span>
                 <div class="custom-file mb-3">
-                    {!! Form::file('arquivo', null, ['class' => 'custom-file-input', 'required' => 'required']) !!}
-                    <label class="custom-file-label">Selecione o Arquivo</label>
-                    @if (isset($documento) && $documento->arquivo)
-                        <br/><a href="/storage/{{ $documento->arquivo }}" target="_blank" class="mt-2 d-block"><i class="fas fa-external-link-alt"></i> Visualizar Arquivo</a>
-                    @endif
+                    {!! Form::file('arquivo', ['class' => 'custom-file-input', 'required' => 'required', 'id' => 'arquivo', 'data-browse' => 'Selecionar']) !!}
+                    <label class="custom-file-label" for="arquivo" >Selecione o Arquivo</label>
                 </div>
 
                 <div class="form-group">

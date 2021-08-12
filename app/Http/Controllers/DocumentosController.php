@@ -18,13 +18,16 @@ class DocumentosController extends Controller
 
     public function create()
     {
-        return view('documento.form');
+        return view('documento.form', [
+            'tipos' => Documento::TIPO
+        ]);
     }
 
     public function edit(Documento $empresa)
     {
         return view('documento.form', [
-            'documento' => $empresa
+            'documento' => $empresa,
+            'tipos' => Documento::TIPO
         ]);
     }
 
@@ -49,6 +52,7 @@ class DocumentosController extends Controller
             return redirect()->route('documentos.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
         } catch (\Throwable $th) {
             DB::rollBack();
+            dd($th->getMessage());
             return redirect()->route('documentos.index')->withErrors('Erro ao Realizar Operação!');
         }
     }

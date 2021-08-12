@@ -25,6 +25,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.min.js" integrity="sha512-Y/GIYsd+LaQm6bGysIClyez2HGCIN1yrs94wUrHoRAD5RSURkqqVQEU6mM51O90hqS80ABFTGtiDpSXd2O05nw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 
     @if ($errors->any())
@@ -36,6 +37,10 @@
         toastr.success('{{session("mensagem")}}');
     @endif
     $('.isSelect2').select2();
+
+    $(document).ready(function(){
+        $('.is_referencia').mask('00/0000');
+    });
 
     function deleteRegister(registro) {
         const url = registro.getAttribute("data-rota");

@@ -16,4 +16,9 @@ class Documento extends Model
         3 => 'Documento 3',
         4 => 'Documento 4'
     ];
+
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
 }
