@@ -1,9 +1,9 @@
-@extends('restrito.template')
+@extends('template')
 
-@section('title', 'Candidato::Triar')
+@section('title', 'Documentos')
 
 @section('content_header')
-    <h1>Candidato::Triar</h1>
+    <h1>Documentos</h1>
 @stop
 
 @section('content')
@@ -11,15 +11,11 @@
     <div class="col">
         <div class="card card-outline card-primary">
             <div class="card-header">
-                <h3 class="card-title">Lista de Candidatos aguardando Triagem</h3>
-                
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                </div>
+                <h3 class="card-title">Lista de Documentos</h3>
             </div>
             <div class="card-body">
+                
+                <a href="{{route('documentos.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Enviar Documento</a>
                 <div class="table-responsive text-nowrap">
                     {{ $dataTable->table() }}
                 </div>
@@ -33,5 +29,6 @@
 @push('js')
 
 {!! $dataTable->scripts() !!}
+
 
 @endpush
