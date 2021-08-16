@@ -16,11 +16,12 @@ class CreateDocumentosTable extends Migration
         Schema::create('documentos', function (Blueprint $table) {
             $table->id();
             $table->string('referencia');
-            $table->string('tipo');
             $table->string('caminho')->nullable();
+            $table->bigInteger('tipo_id')->unsigned();
             $table->bigInteger('empresa_id')->unsigned();
             $table->timestamps();
 
+            $table->foreign('tipo_id')->references('id')->on('tipos');
             $table->foreign('empresa_id')->references('id')->on('empresas');
         });
     }

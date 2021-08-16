@@ -23,8 +23,13 @@
 @section('auth_body')
     <form action="{{ $login_url }}" method="post">
         {{ csrf_field() }}
+        @if($errors->has('desativado'))
+             <strong class="text-danger"><i class="fas fa-exclamation-triangle"></i>  {{ $errors->first('desativado') }}</strong>
+        @endif
+
 
         {{-- Email field --}}
+        
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
                    value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>

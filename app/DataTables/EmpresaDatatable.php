@@ -22,16 +22,18 @@ class EmpresaDatatable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('action', function($query) {
-                return '<a href="' . route('empresa.edit', $query) . '" class="btn btn-primary btn-xs px-2"><i class="fas fa-edit text-xs"></i></a>';
+                $status = [
+                    $query->usuario->is_active ? 'danger' : 'success',
+                    $query->usuario->is_active ? 'ban' : 'check'
+                ];
+                return '<a href="' . route('empresa.edit', $query) . '" class="btn btn-primary btn-xs px-2"><i class="fas fa-edit text-xs"></i></a>'
+                . '<a href="' . route('empresa.status', $query->id) . '" class="btn btn-' . $status[0] . ' btn-xs px-2 ml-1"><i class="fas fa-' . $status[1] . ' text-xs"></i></a>';
             })
             ->editColumn('razao_social', function($query) {
                 return $query->razao_social;
             })
             ->editColumn('usuario', function($query) {
                 return $query->usuario->email;
-            })
-            ->editColumn('last_login_at', function($query) {
-                return $query->last_login_at ? $query->last_login_at->format('d/m/y H:i') : '';
             })
             ->rawColumns(['action']);
     }
@@ -81,8 +83,7 @@ class EmpresaDatatable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('razao_social')->title('Razão Social'),
-            Column::make('usuario')->title('Usuário'),
-            Column::make('last_login_at')->title('Último Acesso'),
+            Column::make('usuario')->title('Usuário')
         ];
     }
 

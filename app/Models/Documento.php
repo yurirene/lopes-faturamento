@@ -10,15 +10,14 @@ class Documento extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
     protected $dates = ['created_at'];
 
-    public const TIPO = [
-        1 => 'Documento 1',
-        2 => 'Documento 2',
-        3 => 'Documento 3',
-        4 => 'Documento 4'
-    ];
 
     public function empresa()
     {
         return $this->belongsTo(Empresa::class);
+    }
+
+    public function tipo()
+    {
+        return $this->belongsTo(Tipo::class)->withTrashed();
     }
 }

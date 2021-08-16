@@ -74,4 +74,16 @@ class EmpresaController extends Controller
             return redirect()->route('empresa.index')->withErrors('Erro ao Realizar Operação!');
         }
     }
+
+    public function status(Empresa $empresa)
+    {
+        try {
+            $usuario = $empresa->usuario;
+            $usuario->is_active =  $usuario->is_active ? 0 : 1;
+            $usuario->save();
+            return redirect()->route('empresa.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
+        } catch (\Throwable $th) {
+            return redirect()->route('empresa.index')->withErrors('Erro ao Realizar Operação!');
+        }
+    }
 }

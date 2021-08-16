@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Documento;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -22,7 +23,11 @@ class DocumentoDatatable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('action', function($query) {
-                return '<a href="" class="btn btn-primary btn-xs px-2"><i class="fas fa-eye text-xs"></i></a>';
+                $botoes = '<a href="' . $query->caminho . '" target="_blank" class="btn btn-primary btn-xs px-2"><i class="fas fa-eye text-xs"></i></a>';
+                if (Auth::user()->is_admin) {
+                    $botoes .= '<a onclick="deleteArchive(this)" href="javascript:void(0)" data-rota="' . route('documentos.delete', $query->id) . '" class="btn btn-danger  btn-xs px-2 ml-1"><i class="fas fa-trash"></i></a>';
+                }
+                return $botoes;
             })
             ->editColumn('referencia', function($query) {
                 return $query->referencia;
@@ -30,8 +35,8 @@ class DocumentoDatatable extends DataTable
             ->editColumn('empresa', function($query) {
                 return $query->empresa->razao_social;
             })
-            ->editColumn('tipo', function($query) {
-                return Documento::TIPO[$query->tipo];
+            ->editColumn('tipo_id', function($query) {
+                return $query->tipo->titulo;
             })
             ->editColumn('created_at', function($query) {
                 return $query->created_at->format('d/m/y H:i');
@@ -47,7 +52,12 @@ class DocumentoDatatable extends DataTable
      */
     public function query(Documento $model)
     {
-        return $model->newQuery();
+        $usuario = Auth::user();
+        $query = $model->newQuery()
+        ->when(!$usuario->is_admin, function ($sql) use ($usuario) {
+            $sql->where('empresa_id', $usuario->empresa->id);
+        });
+        return $query;
     }
 
     /**
@@ -62,7 +72,7 @@ class DocumentoDatatable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(4)
                     ->parameters([
                         "language" => [
                             "url" => "//cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json"
@@ -85,7 +95,7 @@ class DocumentoDatatable extends DataTable
                   ->addClass('text-center'),
             Column::make('referencia')->title('Referência'),
             Column::make('empresa')->title('Empresa'),
-            Column::make('tipo')->title('Tipo'),
+            Column::make('tipo_id')->title('Tipo'),
             Column::make('created_at')->title('Criado em'),
         ];
     }

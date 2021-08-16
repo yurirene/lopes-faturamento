@@ -46,7 +46,7 @@ return [
     */
 
     'logo' => 'Distribuidora<b>Lopes</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'vendor/adminlte/dist/img/lopes_fundo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -237,9 +237,17 @@ return [
             'url'  => '/documentos',
             'icon' => 'fas fa-fw fa-file',
         ],
+
+        [
+            'text' => 'Tipos de Documentos',
+            'url'  => '/tipos',
+            'icon' => 'fas fa-fw fa-list',
+            'can'  => 'is_admin',
+        ],
+
         [
             'text' => 'Trocar Senha',
-            'url'  => '/empresas',
+            'url'  => '/trocar-senha',
             'icon' => 'fas fa-fw fa-lock',
         ],
     ],

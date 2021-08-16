@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\DataTables\DocumentoDatatable;
 use App\Models\Documento;
+use App\Models\Tipo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Str;
 class DocumentosController extends Controller
 {
 
@@ -19,7 +20,7 @@ class DocumentosController extends Controller
     public function create()
     {
         return view('documento.form', [
-            'tipos' => Documento::TIPO
+            'tipos' => Tipo::get()->pluck('titulo', 'id')
         ]);
     }
 
@@ -27,7 +28,7 @@ class DocumentosController extends Controller
     {
         return view('documento.form', [
             'documento' => $empresa,
-            'tipos' => Documento::TIPO
+            'tipos' => Tipo::get()->pluck('titulo', 'id')
         ]);
     }
 
@@ -38,27 +39,37 @@ class DocumentosController extends Controller
             $referencia = str_replace('/', '_', $request->referencia);
             $documento = Documento::create([
                 'referencia' => $request->referencia,
-                'tipo' => $request->tipo,
+                'tipo_id' => $request->tipo,
                 'empresa_id' => Auth::user()->empresa->id
             ]);
             if ($request->arquivo) {
-                $fileName = $referencia. "_" . Documento::TIPO[$request->tipo] . "." . $request->arquivo->getClientOriginalExtension();
-                $request->arquivo->storeAs('public', $fileName);
+                $tipo = Tipo::find($request->tipo);
+                $fileName = $referencia. "_" . str_replace(' ', '_', $tipo->titulo) . "." . $request->arquivo->getClientOriginalExtension();
+                $request->arquivo->storeAs('public/' . Str::slug(Auth::user()->empresa->razao_social), $fileName);
                 $documento->update([
-                    'caminho' => "public/" . $fileName
+                    'caminho' => "storage/" . Str::slug(Auth::user()->empresa->razao_social) . "/" . $fileName
                 ]);
             }
             DB::commit();
             return redirect()->route('documentos.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th->getMessage());
             return redirect()->route('documentos.index')->withErrors('Erro ao Realizar Operação!');
         }
     }
 
-    public function destroy()
+    public function delete (Documento $documento)
     {
+        DB::beginTransaction();
+        try {
+            unlink(public_path($documento->caminho));
+            $documento->delete();
+            DB::commit();
+            return redirect()->route('documentos.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->route('documentos.index')->withErrors('Erro ao Realizar Operação!');
+        }
 
     }
 }
