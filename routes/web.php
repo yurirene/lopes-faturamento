@@ -7,17 +7,16 @@ Auth::routes();
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
-Route::middleware(['auth', 'usuario-ativo'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/inicio', 'HomeController@index')->name('home');
-
-    Route::resource('/empresa', EmpresaController::class)->middleware('can:is_admin');
-    Route::get('/empresa/{empresa}/status', 'EmpresaController@status')->name('empresa.status');
     
-    Route::resource('/documentos', DocumentosController::class)->except('destroy');
-    Route::get('/documentos/{documento}/delete', 'DocumentosController@delete')->name('documentos.delete')->middleware('can:is_admin');
+    Route::get('/dados-cadastrais', 'DadosCadastraisController@index')->name('dados-cadastrais.index');
+    Route::get('/dados-cadastrais/importar', 'DadosCadastraisController@importar')->name('dados-cadastrais.importar');
+    Route::post('/dados-cadastrais/importar', 'DadosCadastraisController@importarPlanilha')->name('dados-cadastrais.importar-planilha');
 
-    Route::resource('/tipos', TipoController::class)->except('destroy')->middleware('can:is_admin');
-    Route::get('/tipos/{tipo}/delete', 'TipoController@delete')->name('tipos.delete')->middleware('can:is_admin');
+
+    Route::get('/xml', 'XMLController@index')->name('xml.importar');
+    Route::post('/xml/importar', 'XMLController@importar')->name('xml.importar-xml');
 
     Route::get('/trocar-senha', 'HomeController@trocarSenha')->name('trocar-senha');
     Route::post('/alterar-senha', 'HomeController@alterarSenha')->name('alterar-senha');

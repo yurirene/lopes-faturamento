@@ -226,23 +226,15 @@ return [
 
     'menu' => [
         [
-            'text' => 'Empresas',
-            'url'  => '/empresa',
-            'icon' => 'fas fa-fw fa-building',
-            'can'  => 'is_admin',
+            'text' => 'Dados Cadastrais',
+            'url'  => '/dados-cadastrais',
+            'icon' => 'fas fa-fw fa-database',
         ],
 
         [
-            'text' => 'Documentos',
-            'url'  => '/documentos',
-            'icon' => 'fas fa-fw fa-file',
-        ],
-
-        [
-            'text' => 'Tipos de Documentos',
-            'url'  => '/tipos',
-            'icon' => 'fas fa-fw fa-list',
-            'can'  => 'is_admin',
+            'text' => 'Importar XML',
+            'url'  => '/xml',
+            'icon' => 'fas fa-fw fa-file-import',
         ],
 
         [
