@@ -1,9 +1,9 @@
 @extends('template')
 
-@section('title', 'Empresa')
+@section('title', 'Dados Cadastrais')
 
 @section('content_header')
-    <h1>Empresa</h1>
+    <h1>Dados Cadastrais</h1>
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
                 {!! Form::open(['url' => route('dados-cadastrais.importar-planilha'), 'files' => true]) !!}
                 <label>Arquivo</label> <span class="text-danger">*</span>
                 <div class="custom-file mb-3">
-                    {!! Form::file('arquivo', ['class' => 'custom-file-input', 'required' => 'required', 'id' => 'arquivo', 'data-browse' => 'Selecionar']) !!}
+                    {!! Form::file('arquivo', ['class' => 'custom-file-input', 'required' => 'required', 'id' => 'arquivo']) !!}
                     <label class="custom-file-label" for="arquivo" >Selecione o Arquivo</label>
                 </div>
                 

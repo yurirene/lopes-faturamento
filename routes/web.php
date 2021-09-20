@@ -21,4 +21,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/trocar-senha', 'HomeController@trocarSenha')->name('trocar-senha');
     Route::post('/alterar-senha', 'HomeController@alterarSenha')->name('alterar-senha');
 
+    Route::get('/notas', 'NotasController@index')->name('notas.index');
 });

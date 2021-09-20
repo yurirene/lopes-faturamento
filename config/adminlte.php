@@ -225,16 +225,36 @@ return [
     */
 
     'menu' => [
-        [
-            'text' => 'Dados Cadastrais',
-            'url'  => '/dados-cadastrais',
-            'icon' => 'fas fa-fw fa-database',
-        ],
 
         [
             'text' => 'Importar XML',
             'url'  => '/xml',
             'icon' => 'fas fa-fw fa-file-import',
+        ],
+
+        [
+            'text' => 'Notas',
+            'url'  => '/notas',
+            'icon' => 'fas fa-fw fa-file',
+        ],
+
+
+        [
+            'text' => 'Clientes',
+            'url'  => '/clientes',
+            'icon' => 'fas fa-fw fa-users',
+        ],
+
+        [
+            'text' => 'Industria',
+            'url'  => '/xml',
+            'icon' => 'fas fa-fw fa-building',
+        ],
+
+        [
+            'text' => 'Dados Cadastrais',
+            'url'  => '/dados-cadastrais',
+            'icon' => 'fas fa-fw fa-database',
         ],
 
         [
