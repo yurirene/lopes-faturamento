@@ -8,6 +8,7 @@ class Nota extends Model
 {
     protected $table = 'notas';
     protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $dates = ['emissao', 'chegada', 'chegada_porto', 'data_entrega', 'data_reentrega', 'created_at', 'updated_at'];
 
 
     public function itens()

@@ -22,4 +22,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/alterar-senha', 'HomeController@alterarSenha')->name('alterar-senha');
 
     Route::get('/notas', 'NotasController@index')->name('notas.index');
+    Route::get('/notas/{nota}/itens', 'NotasController@itens')->name('notas.itens');
+    Route::get('/notas/{nota}/edit', 'NotasController@edit')->name('notas.edit');
+    Route::put('/notas/{nota}/update', 'NotasController@update')->name('notas.update');
+    Route::get('/notas/{nota}/detele', 'NotasController@delete')->name('notas.delete');
+
+    Route::resource('clientes', 'ClienteController')->except(['destroy']);
+    Route::get('/clientes/{cliente}/delete', 'ClienteController@delete')->name('clientes.delete');
+    
+
+
 });

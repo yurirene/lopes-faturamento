@@ -27,7 +27,6 @@ class DadosCadastraisController extends Controller
             Excel::import(new DadosCadastraisImport, $arquivo);
             return redirect()->route('dados-cadastrais.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             return redirect()->route('dados-cadastrais.importar')->withErrors('Erro ao Realizar Operação!');
         }
         

@@ -26,18 +26,18 @@
                                     <div class="col-6">
                                         <div class="form-group input-group-sm">
                                             {!! Form::label('industrias', 'Industrias') !!}
-                                            {!! Form::select('industrias', $industrias, null, ['class' => 'form-control isSelect2', 'required' => 'required', 'id' => 'industrias', 'multiple' => 'multiple']) !!}
+                                            {!! Form::select('industrias', $industrias, null, ['class' => 'form-control isSelect2', 'required' => 'required', 'id' => 'industria', 'multiple' => 'multiple']) !!}
                                         </div>
                                         <div class="form-group input-group-sm">
                                             {!! Form::label('clientes', 'Clientes') !!}
-                                            {!! Form::select('clientes', $clientes, null, ['class' => 'form-control isSelect2', 'required' => 'required', 'id' => 'clientes', 'multiple' => 'multiple']) !!}
+                                            {!! Form::select('clientes', $clientes, null, ['class' => 'form-control isSelect2', 'required' => 'required', 'id' => 'cliente', 'multiple' => 'multiple']) !!}
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group input-group-sm">
                                             {!! Form::label('periodo', 'Período') !!}
                                             <div class="input-group">
-                                                {!! Form::text('periodo', null, ['class' => 'form-control isDateRange', 'id'=>'periodo']) !!}
+                                                {!! Form::text('periodo', null, ['class' => 'form-control isDateRange', 'id'=>'periodo', 'autocomplete' => 'off']) !!}
                                                 <div class="input-group-append">
                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                 </div>
@@ -71,3 +71,53 @@
     </div>
 </div>
 @stop
+
+@push('js')
+
+{!! $dataTable->scripts() !!}
+<script>
+    const table = $('#notas-table');
+
+    table.on('preXhr.dt', function(e, settings, data){
+        data.industria = $('#industria').val();
+        data.cliente = $('#cliente').val();
+        data.periodo = $('#periodo').val();
+    });
+
+    $('#filtrar').on('click', function (){
+        table.DataTable().ajax.reload();
+        return false;
+    });
+
+    $('#resetar').on('click', function (){
+        $('#industria').val(null).trigger('change');
+        $('#cliente').val(null).trigger('change');
+        $('#periodo').val('');
+        table.DataTable().ajax.reload();
+        return false;
+    });
+
+</script>
+
+@endpush
+
+@push('css')
+<style>
+    .select2-selection__rendered {
+        line-height: 20px !important;
+    }
+    .select2-container .select2-selection--single {
+        height: 33px !important;
+    }
+    .select2-container .select2-selection--multiple {
+        height: 33px !important;
+    }
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+
+    .input-group-sm .form-control {
+        height: calc(2rem + 1px);
+    }
+</style>
+@endpush
