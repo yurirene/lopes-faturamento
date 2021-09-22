@@ -247,7 +247,7 @@ return [
 
         [
             'text' => 'Industria',
-            'url'  => '/xml',
+            'url'  => '/industrias',
             'icon' => 'fas fa-fw fa-building',
         ],
 

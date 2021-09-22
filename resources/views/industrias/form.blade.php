@@ -14,10 +14,10 @@
                 <h3 class="card-title">Formulário</h3>
             </div>
             <div class="card-body">
-                @if(!isset($cliente))
-                {!! Form::open(['route' => ['clientes.store'], 'method' => 'POST']) !!}
+                @if(!isset($industria))
+                {!! Form::open(['route' => ['industrias.store'], 'method' => 'POST']) !!}
                 @else                
-                {!! Form::model($cliente, ['route' => ['clientes.update', $cliente->id], 'method' => 'PUT']) !!}
+                {!! Form::model($industria, ['route' => ['industrias.update', $industria->id], 'method' => 'PUT']) !!}
                 @endif
                 <div class="row">
                     <div class="col-md-6">
@@ -37,29 +37,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            {!! Form::label('endereco', 'Endereço') !!}
-                            {!! Form::text('endereco', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
                             {!! Form::label('cidade', 'Cidade') !!}
                             {!! Form::text('cidade', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            {!! Form::label('uf', 'UF') !!}
-                            {!! Form::text('uf', null, ['class' => 'form-control']) !!}
-                        </div>
-                       
-                    </div>
-                </div>
                 <div class="form-group">
                 {!! Form::button("<i class='fas fa-save'></i> Salvar", ['type' => 'submit', 'class' => 'btn btn-success']) !!}
-                <a href="{{ route('clientes.index') }}" class="btn btn-default"><i class="fas fa-arrow-left"></i> Voltar</a>
+                <a href="{{ route('industrias.index') }}" class="btn btn-default"><i class="fas fa-arrow-left"></i> Voltar</a>
                 </div>
 
                 {!! Form::close() !!}

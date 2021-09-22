@@ -34,13 +34,15 @@ class CreateNotasTable extends Migration
             $table->integer('nf_devolucao')->nullable();
             $table->decimal('valor_frete')->nullable();
             $table->string('observacao')->nullable();
+            $table->integer('numero_viagem')->nullable();
+            $table->integer('numero_embarque')->nullable();
             $table->bigInteger('cliente_id')->unsigned();
             $table->bigInteger('industria_id')->unsigned();
             
             $table->timestamps();
             
-            $table->foreign('cliente_id')->references('id')->on('clientes');
-            $table->foreign('industria_id')->references('id')->on('industrias');
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+            $table->foreign('industria_id')->references('id')->on('industrias')->onDelete('cascade');
         });
     }
 

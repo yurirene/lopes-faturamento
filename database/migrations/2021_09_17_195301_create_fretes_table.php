@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIndustriasTable extends Migration
+class CreateFretesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateIndustriasTable extends Migration
      */
     public function up()
     {
-        Schema::create('industrias', function (Blueprint $table) {
+        Schema::create('fretes', function (Blueprint $table) {
             $table->id();
-            $table->string('cnpj');
-            $table->string('razao_social');
-            $table->string('cidade');
+            $table->string('nome');
+            $table->decimal('fator');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateIndustriasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('industrias');
+        Schema::dropIfExists('fretes');
     }
 }

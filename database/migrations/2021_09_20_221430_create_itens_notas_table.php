@@ -16,12 +16,14 @@ class CreateItensNotasTable extends Migration
         Schema::create('itens_notas', function (Blueprint $table) {
             $table->id();
             $table->integer('codigo_produto');
-            $table->integer('caixa_fardo');
-            $table->decimal('peso_liquido');
+            $table->string('descricao')->nullable();
+            $table->integer('caixa_fardo')->nullable();
+            $table->decimal('peso_liquido')->nullable();
+            $table->string('armazenagem')->nullable();
             $table->bigInteger('nota_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('nota_id')->references('id')->on('notas');
+            $table->foreign('nota_id')->references('id')->on('notas')->onDelete('cascade');
         });
     }
 

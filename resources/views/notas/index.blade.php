@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group input-group-sm">
-                                            {!! Form::label('periodo', 'Período') !!}
+                                            {!! Form::label('periodo', 'Período de Emissão') !!}
                                             <div class="input-group">
                                                 {!! Form::text('periodo', null, ['class' => 'form-control isDateRange', 'id'=>'periodo', 'autocomplete' => 'off']) !!}
                                                 <div class="input-group-append">
