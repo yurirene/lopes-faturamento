@@ -31,7 +31,6 @@ class IndustriasDatatable extends DataTable
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $query->id . '">
                   <a class="dropdown-item" href="' . route('industrias.edit', $query->id) . '"><i class="fas fa-pen text-sm"></i> Editar</a>
-                  <a class="dropdown-item" href="' . route('industrias.delete', $query->id) . '"><i class="fas fa-trash text-sm"></i> Apagar</a>
                 </div>
               </div>';
             })
@@ -62,13 +61,11 @@ class IndustriasDatatable extends DataTable
                     ->minifiedAjax()
                     ->dom('Bfrtip')
                     ->orderBy(2)
-                    ->buttons(
-                        Button::make('create')->text("<i class='fas fa-plus'></i> Adicionar")
-                    )
                     ->parameters([
                         "language" => [
                             "url" => "//cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json"
                         ],
+                        'buttons' => []
                     ]);
     }
 

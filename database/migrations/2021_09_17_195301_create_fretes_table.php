@@ -17,6 +17,7 @@ class CreateFretesTable extends Migration
             $table->id();
             $table->string('nome');
             $table->decimal('fator');
+            $table->integer('codigo');
             $table->timestamps();
         });
     }

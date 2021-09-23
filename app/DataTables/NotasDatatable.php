@@ -32,8 +32,7 @@ class NotasDatatable extends DataTable
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $query->id . '">
                 <a class="dropdown-item" href="' . route('notas.itens', $query->id) . '"><i class="fas fa-external-link-square-alt text-sm"></i> Abrir</a>
                   <a class="dropdown-item" href="' . route('notas.edit', $query->id) . '"><i class="fas fa-pen text-sm"></i> Editar</a>
-                  <a class="dropdown-item" href="' . route('notas.delete', $query->id) . '"><i class="fas fa-trash text-sm"></i> Apagar</a>
-                  <a class="dropdown-item" href="#"><i class="fas fa-file-download text-sm"></i> Baixar XML</a>
+                  <a onclick="deleteRegister(this)" href="javascript:void(0)" data-rota="' . route('notas.delete', $query->id) . '" class="dropdown-item"><i class="fas fa-trash text-sm"></i> Apagar</a>
                 </div>
               </div>';
             })
@@ -139,11 +138,14 @@ class NotasDatatable extends DataTable
                     ->minifiedAjax()
                     ->dom('Bfrtip')
                     ->orderBy(5)
+                    ->buttons(
+                        Button::make('excel')->text("<i class='fas fa-file-excel'></i> Exportar"),
+                        Button::make('print')->text("<i class='fas fa-print'></i> Imprimir")
+                    )
                     ->parameters([
                         "language" => [
                             "url" => "//cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json"
-                        ],
-                        'buttons' => []
+                        ]
                     ]);
     }
 
@@ -155,7 +157,7 @@ class NotasDatatable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('action')->title('Ações'),
+            Column::make('action')->title('Ações')->exportable(false)->printable(false),
             Column::make('industria_id')->title('Industria'),
             Column::make('cliente_id')->title('Cliente'),
             Column::make('numero')->title('Nota'),

@@ -42,10 +42,7 @@ class CreateDadosCadastraisTable extends Migration
             $table->decimal('palet_peso_liquido')->nullable();
             $table->decimal('palet_peso_bruto')->nullable();
             $table->string('ncm')->nullable();
-            $table->bigInteger('industria_id')->unsigned();
             $table->timestamps();
-
-            $table->foreign('industria_id')->references('id')->on('industrias');
         });
     }
 

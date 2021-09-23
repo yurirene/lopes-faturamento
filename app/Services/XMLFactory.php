@@ -13,6 +13,6 @@ class XMLFactory
     public function service($industria)
     {
         $classe = $this->services[$industria];
-        return "\App\Serivices\\$classe"; 
+        return "\App\Services\\$classe"; 
     }
 }

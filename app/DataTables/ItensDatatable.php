@@ -19,7 +19,7 @@ class ItensDatatable extends DataTable
      */
     public function dataTable($query)
     {
-        return datatables()
+        $table = datatables()
             ->eloquent($query)
             ->addColumn('industria', function($query) {
                 return $query->nota->industria->razao_social;
@@ -29,14 +29,19 @@ class ItensDatatable extends DataTable
             })
             ->addColumn('numero', function($query) {
                 return $query->nota->numero;
-            })
-            ->addColumn('descricao', function($query) {
-                $item = DadosCadastrais::where('codigo', $query->codigo_produto)->first();
-                return $item->sigla . " - " . $item->descricao;
+            });
+            if (request()->nota->industria->id == 2) {
+                $table->addColumn('dun', function($query) {
+                    $item = DadosCadastrais::where('codigo', $query->codigo_produto)->first();
+                    return $item->dun;
+                });
+            }
+            $table->addColumn('descricao', function($query) {
+                return $query->descricao;
             })
             ->addColumn('armazenagem', function($query) {
-                $item = DadosCadastrais::where('codigo', $query->codigo_produto)->first();
-                return $item->conservacao;
+                
+                return $query->armazenagem;
             })
             ->addColumn('cidade', function($query) {
                 return $query->nota->cidade_entrega;
@@ -44,6 +49,7 @@ class ItensDatatable extends DataTable
             ->editColumn('peso_liquido', function($query) {
                 return $query->peso_liquido ;
             });
+        return $table;
     }
 
     /**
@@ -91,7 +97,7 @@ class ItensDatatable extends DataTable
      */
     protected function getColumns()
     {
-        return [
+        $colunas = [
             Column::make('industria')->title('Industria'),
             Column::make('cliente')->title('Cliente'),
             Column::make('numero')->title('Nota'),
@@ -102,6 +108,10 @@ class ItensDatatable extends DataTable
             Column::make('armazenagem')->title('Armazenagem'),
             Column::make('cidade')->title('Cidade')
         ];
+        if (request()->nota->industria->id == 2) {
+            $colunas[] = Column::make('dun')->title('DUN'); 
+        }
+        return $colunas;
     }
     public function voltar()
     {

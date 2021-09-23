@@ -30,7 +30,7 @@ class XMLController extends Controller
             $quantidade_enviada = count($request->arquivos);
             $service = self::getService($request->industria);
             $service::importar($request->all(), $quantidade_importada);
-            return redirect()->route('industrias.index')->with(['mensagem' => 'Notas Importadas ' . $quantidade_importada. ' de '. $quantidade_enviada]);
+            return redirect()->route('xml.importar')->with(['mensagem' => 'Notas Importadas ' . $quantidade_importada. ' de '. $quantidade_enviada]);
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors($th->getMessage());
         }

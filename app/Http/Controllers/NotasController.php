@@ -61,5 +61,16 @@ class NotasController extends Controller
         }
         
     }
+
+    public function delete(Nota $nota)
+    {
+        try {
+            $nota->itens()->delete();
+            $nota->delete();
+            return redirect()->route('notas.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
+        } catch (\Throwable $th) {
+            return redirect()->route('notas.index', $nota)->withErrors('Erro ao Realizar Operação!');
+        }
+    }
     
 }

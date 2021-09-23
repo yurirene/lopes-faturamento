@@ -258,7 +258,7 @@ return [
         ],
 
         [
-            'text' => 'Dados Cadastrais',
+            'text' => 'Base de Dados - Catupiry',
             'url'  => '/dados-cadastrais',
             'icon' => 'fas fa-fw fa-database',
         ],

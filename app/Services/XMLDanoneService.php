@@ -10,9 +10,10 @@ use App\Models\ItensNota;
 use App\Models\Nota;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
-class XMLCatupiryService extends XMLService
+class XMLDanoneService extends XMLService
 {
 
     public static function importar($request, &$quantidade_importada)
@@ -35,10 +36,6 @@ class XMLCatupiryService extends XMLService
             throw $th;
         }
     }
-
-    /**
-     * Salva o esqueleto da nota
-     */
 
     public static function store($notas, $industria)
     {
@@ -68,7 +65,8 @@ class XMLCatupiryService extends XMLService
         $fator = Frete::where('codigo', $nota['dest']['enderDest']['cMun'])->first()->fator;
         $retorno = [
             'numero' => $nota['ide']['nNF'],
-            'emissao' => Carbon::createFromFormat('Y-m-d\TH:i:sP', $nota['ide']['dhEmi']),
+            'pedido_cliente' => 'S/N',
+            'emissao' => Carbon::createFromFormat('Y-m-d\TH:i:sP', $nota['ide']['dhEmi'])->format('Y-m-d'),
             'valor_bruto' => $nota['total']['ICMSTot']['vNF'],
             'valor_liquido' => $nota['total']['ICMSTot']['vProd'],
             'peso_liquido' => $nota['transp']['vol']['pesoL'],
@@ -104,17 +102,13 @@ class XMLCatupiryService extends XMLService
      * Retorna a informações necessárias para à Model\ItensNota
      */
 
+
     public static function informacoesProduto($item)
-    {
-        $produto = DadosCadastrais::where('codigo', intval($item['prod']['cProd']))->first();
-        $quantidade_caixa = $item['prod']['qCom'] / $produto->qtd_und_caixa;
-        $peso_caixa_liquido = $produto->peso_liquido_caixa * $quantidade_caixa;
+    {        
         $retorno = array(
             'codigo_produto' => $item['prod']['cProd'],
             'descricao' => $item['prod']['xProd'],
-            'caixa_fardo' => $quantidade_caixa,
-            'peso_liquido' => $peso_caixa_liquido,
-            'armazenagem' => $produto->conservacao
+            'caixa_fardo' => $item['prod']['qCom'],
         );
         return $retorno;
     }

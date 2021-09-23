@@ -31,7 +31,6 @@ class ClientesDatatable extends DataTable
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $query->id . '">
                   <a class="dropdown-item" href="' . route('clientes.edit', $query->id) . '"><i class="fas fa-pen text-sm"></i> Editar</a>
-                  <a class="dropdown-item" href="' . route('clientes.delete', $query->id) . '"><i class="fas fa-trash text-sm"></i> Apagar</a>
                 </div>
               </div>';
             })

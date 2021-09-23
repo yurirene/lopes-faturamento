@@ -17,29 +17,7 @@ class IndustriaController extends Controller
     {
         return $dataTable->render('industrias.index');
     }
-
-    public function create()
-    {
-        return view('industrias.form');
-    }
-
-    public function store(Request $request)
-    {
-        try {
-            $cnpj = str_replace(['.', '-', '/'], '', $request->cnpj);
-            Industria::create([
-                'cnpj' => $cnpj,
-                'razao_social' => $request->razao_social,
-                'cidade' => $request->cidade,
-            ]);
-            return redirect()->route('industrias.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
-        } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors('Erro ao Realizar Operação!');
-        }
-        
-    }
-
-
+    
     public function edit(Industria $industria)
     {
         return view('industrias.form', [
@@ -50,10 +28,8 @@ class IndustriaController extends Controller
     public function update(Industria $industria, Request $request)
     {
         try {
-            $cnpj = str_replace(['.', '-', '/'], '', $request->cnpj);
 
             $industria->update([
-                'cnpj' => $cnpj,
                 'razao_social' => $request->razao_social,
                 'cidade' => $request->cidade,
             ]);

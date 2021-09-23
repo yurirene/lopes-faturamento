@@ -34,14 +34,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('pedido_cliente', 'Pedido Cliente') !!}
-                            {!! Form::text('pedido_cliente', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('pedido_cliente', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
                         
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('cte', 'Cte') !!}
-                            {!! Form::text('cte', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('cte', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
                     </div>
                 </div>
@@ -49,13 +49,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('chegada', 'Data da Chegada') !!}
-                            {!! Form::text('chegada', $nota->chegada ? $nota->chegada->format('d/m/Y') : null, ['class' => 'form-control isDate']) !!}
+                            {!! Form::text('chegada', $nota->chegada ? $nota->chegada->format('d/m/Y') : null, ['class' => 'form-control isDate', 'autocomplete' => 'off']) !!}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('chegada_porto', 'Data da Chegada no Porto') !!}
-                            {!! Form::text('chegada_porto', $nota->chegada_porto ? $nota->chegada_porto->format('d/m/Y') : null, ['class' => 'form-control isDate']) !!}
+                            {!! Form::text('chegada_porto', $nota->chegada_porto ? $nota->chegada_porto->format('d/m/Y') : null, ['class' => 'form-control isDate', 'autocomplete' => 'off']) !!}
                         </div>
                     </div>
                 </div>
@@ -63,14 +63,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('placa', 'Placa') !!}
-                            {!! Form::text('placa', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('placa', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
                        
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('transportadora', 'Transportadora') !!}
-                            {!! Form::text('transportadora', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('transportadora', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
                     </div>
                 </div>
@@ -78,14 +78,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('data_entrega', 'Data da Entrega') !!}
-                            {!! Form::text('data_entrega', $nota->data_entrega ? $nota->data_entrega->format('d/m/Y') : null, ['class' => 'form-control isDate']) !!}
+                            {!! Form::text('data_entrega', $nota->data_entrega ? $nota->data_entrega->format('d/m/Y') : null, ['class' => 'form-control isDate', 'autocomplete' => 'off']) !!}
                         </div>
                         
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('data_reentrega', 'Data da Reentrega') !!}
-                            {!! Form::text('data_reentrega', $nota->data_reentrega ? $nota->data_reentrega->format('d/m/Y') : null, ['class' => 'form-control isDate']) !!}
+                            {!! Form::text('data_reentrega', $nota->data_reentrega ? $nota->data_reentrega->format('d/m/Y') : null, ['class' => 'form-control isDate', 'autocomplete' => 'off']) !!}
                         </div>
                     </div>
                 </div>
@@ -93,14 +93,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('canhoto', 'Canhoto') !!}
-                            {!! Form::select('canhoto', [0 => 'Aguardando', 1 => 'Ok'], $nota->canhoto ,['class' => 'form-control']) !!}
+                            {!! Form::select('canhoto', [0 => 'Aguardando', 1 => 'Ok'], $nota->canhoto ,['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
                         
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('nf_devolucao', 'NF de Devolução') !!}
-                            {!! Form::text('nf_devolucao', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('nf_devolucao', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('observacao', 'Observação') !!}
-                            {!! Form::textarea('observacao', null, ['class' => 'form-control', 'maxlength' => "200", 'rows' => 3]) !!}
+                            {!! Form::textarea('observacao', null, ['class' => 'form-control', 'maxlength' => "200", 'rows' => 3, 'autocomplete' => 'off']) !!}
                         </div>
                     </div>
                 </div>

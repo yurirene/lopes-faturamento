@@ -17,11 +17,11 @@
                 {!! Form::open(['url' => route('xml.importar-xml'), 'files' => true]) !!}
                 <div class="form-group">
                     {!! Form::label('industria', 'Industria') !!}
-                    {!! Form::select('industria', $industrias, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('industria', $industrias, null, ['class' => 'form-control', 'required']) !!}
                 </div>
                 <label>Arquivo</label> <span class="text-danger">*</span>
                 <div class="custom-file mb-3">
-                    <input id="arquivo" name="arquivos[]" type="file" class="file"  data-show-upload="true" data-show-caption="true" multiple>
+                    <input id="arquivo" name="arquivos[]" type="file" class="file"  data-show-upload="true" data-show-caption="true" multiple required>
                     <label class="custom-file-label" for="arquivo" >Selecione o Arquivo</label>
                 </div>
 
