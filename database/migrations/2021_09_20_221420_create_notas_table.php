@@ -42,7 +42,7 @@ class CreateNotasTable extends Migration
             $table->timestamps();
             
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
-            $table->foreign('industria_id')->references('id')->on('industrias')->onDelete('cascade');
+            $table->foreign('industria_id')->references('id')->on('industrias');
         });
     }
 

@@ -252,6 +252,12 @@ return [
         ],
 
         [
+            'text' => 'Frete',
+            'url'  => '/fretes',
+            'icon' => 'fas fa-fw fa-truck-moving',
+        ],
+
+        [
             'text' => 'Dados Cadastrais',
             'url'  => '/dados-cadastrais',
             'icon' => 'fas fa-fw fa-database',

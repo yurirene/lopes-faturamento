@@ -32,6 +32,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('industrias', 'IndustriaController')->except(['destroy']);
     Route::get('/industrias/{industria}/delete', 'IndustriaController@delete')->name('industrias.delete');
+
+    Route::resource('fretes', 'FreteController')->except(['destroy']);
+    Route::get('/fretes/{frete}/delete', 'FreteController@delete')->name('fretes.delete');
     
 
 

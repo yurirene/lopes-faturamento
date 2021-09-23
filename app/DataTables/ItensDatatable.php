@@ -42,7 +42,7 @@ class ItensDatatable extends DataTable
                 return $query->nota->cidade_entrega;
             })
             ->editColumn('peso_liquido', function($query) {
-                return $query->peso_liquido . " Kg";
+                return $query->peso_liquido ;
             });
     }
 

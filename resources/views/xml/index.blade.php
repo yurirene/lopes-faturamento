@@ -15,9 +15,13 @@
             </div>
             <div class="card-body">
                 {!! Form::open(['url' => route('xml.importar-xml'), 'files' => true]) !!}
+                <div class="form-group">
+                    {!! Form::label('industria', 'Industria') !!}
+                    {!! Form::select('industria', $industrias, null, ['class' => 'form-control']) !!}
+                </div>
                 <label>Arquivo</label> <span class="text-danger">*</span>
                 <div class="custom-file mb-3">
-                    {!! Form::file('arquivo', ['class' => 'custom-file-input', 'required' => 'required', 'id' => 'arquivo', 'data-browse' => 'Selecionar']) !!}
+                    <input id="arquivo" name="arquivos[]" type="file" class="file"  data-show-upload="true" data-show-caption="true" multiple>
                     <label class="custom-file-label" for="arquivo" >Selecione o Arquivo</label>
                 </div>
 

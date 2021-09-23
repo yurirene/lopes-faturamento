@@ -67,11 +67,11 @@ class NotasDatatable extends DataTable
             })
             
             ->editColumn('peso_bruto', function($query) {
-                return number_format($query->peso_bruto, 2, '.', ' ') . " Kg";
+                return number_format($query->peso_bruto, 2, '.', ' ');
             })
             
             ->editColumn('peso_liquido', function($query) {
-                return number_format($query->peso_liquido, 2, '.', ' ') . " Kg";
+                return number_format($query->peso_liquido, 2, '.', ' ');
             })
 
             ->editColumn('data_entrega', function($query) {

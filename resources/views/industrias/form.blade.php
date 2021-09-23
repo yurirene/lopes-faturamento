@@ -1,9 +1,9 @@
 @extends('template')
 
-@section('title', 'Notas')
+@section('title', 'Industrias')
 
 @section('content_header')
-    <h1>Notas</h1>
+    <h1>Industrias</h1>
 @stop
 
 @section('content')
@@ -23,14 +23,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('cnpj', 'CNPJ') !!}
-                            {!! Form::text('cnpj', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('cnpj', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
                         
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('razao_social', 'Razão Social') !!}
-                            {!! Form::text('razao_social', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('razao_social', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('cidade', 'Cidade') !!}
-                            {!! Form::text('cidade', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('cidade', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
                     </div>
                 </div>

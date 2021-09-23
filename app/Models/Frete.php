@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cidade extends Model
+class Frete extends Model
 {
-    protected $table = 'cidades';
+    protected $table = 'fretes';
     protected $guarded = ['id', 'created_at', 'updated_at']; 
 }
