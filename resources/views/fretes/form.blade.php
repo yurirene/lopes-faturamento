@@ -23,20 +23,20 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             {!! Form::label('nome', 'Cidade') !!}
-                            {!! Form::text('nome', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+                            {!! Form::text('nome', null, ['class' => 'form-control', 'autocomplete' => 'off', 'required']) !!}
                         </div>
                         
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             {!! Form::label('fator', 'Fator de Multiplicação') !!}
-                            {!! Form::text('fator', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+                            {!! Form::text('fator', null, ['class' => 'form-control', 'autocomplete' => 'off', 'required']) !!}
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             {!! Form::label('codigo', 'Cód Município') !!}
-                            {!! Form::text('codigo', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+                            {!! Form::text('codigo', null, ['class' => 'form-control', 'autocomplete' => 'off', 'required']) !!}
                         </div>
                     </div>
                 </div>

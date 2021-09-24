@@ -86,10 +86,16 @@ class XMLDanoneService extends XMLService
         DB::beginTransaction();
         try {
             $itens = data_get($nota, 'det');
-            foreach ($itens as $item) {
-                $informacoes = self::informacoesProduto($item);
+            if (array_key_exists('prod', $itens)) {
+                $informacoes = self::informacoesProduto($itens);
                 $informacoes['nota_id'] = $nova_nota->id;
                 ItensNota::create($informacoes);
+            } else {
+                foreach ($itens as $item) {
+                    $informacoes = self::informacoesProduto($item);
+                    $informacoes['nota_id'] = $nova_nota->id;
+                    ItensNota::create($informacoes);
+                }
             }
             DB::commit();
         } catch (\Throwable $th) {

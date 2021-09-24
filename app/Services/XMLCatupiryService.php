@@ -68,6 +68,7 @@ class XMLCatupiryService extends XMLService
         $fator = Frete::where('codigo', $nota['dest']['enderDest']['cMun'])->first()->fator;
         $retorno = [
             'numero' => $nota['ide']['nNF'],
+            'pedido_cliente' => 'S/N',
             'emissao' => Carbon::createFromFormat('Y-m-d\TH:i:sP', $nota['ide']['dhEmi']),
             'valor_bruto' => $nota['total']['ICMSTot']['vNF'],
             'valor_liquido' => $nota['total']['ICMSTot']['vProd'],
@@ -88,11 +89,18 @@ class XMLCatupiryService extends XMLService
         DB::beginTransaction();
         try {
             $itens = data_get($nota, 'det');
-            foreach ($itens as $item) {
-                $informacoes = self::informacoesProduto($item);
+            if (array_key_exists('prod', $itens)) {
+                $informacoes = self::informacoesProduto($itens);
                 $informacoes['nota_id'] = $nova_nota->id;
                 ItensNota::create($informacoes);
+            } else {
+                foreach ($itens as $item) {
+                    $informacoes = self::informacoesProduto($item);
+                    $informacoes['nota_id'] = $nova_nota->id;
+                    ItensNota::create($informacoes);
+                }
             }
+            
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -111,6 +119,7 @@ class XMLCatupiryService extends XMLService
         $peso_caixa_liquido = $produto->peso_liquido_caixa * $quantidade_caixa;
         $retorno = array(
             'codigo_produto' => $item['prod']['cProd'],
+            'descricao' => $produto->sigla,
             'descricao' => $item['prod']['xProd'],
             'caixa_fardo' => $quantidade_caixa,
             'peso_liquido' => $peso_caixa_liquido,

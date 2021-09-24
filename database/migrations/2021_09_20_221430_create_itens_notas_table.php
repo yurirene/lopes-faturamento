@@ -16,6 +16,7 @@ class CreateItensNotasTable extends Migration
         Schema::create('itens_notas', function (Blueprint $table) {
             $table->id();
             $table->integer('codigo_produto');
+            $table->string('sigla')->nullable();
             $table->string('descricao')->nullable();
             $table->integer('caixa_fardo')->nullable();
             $table->decimal('peso_liquido')->nullable();

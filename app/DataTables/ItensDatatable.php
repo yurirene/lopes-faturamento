@@ -36,6 +36,12 @@ class ItensDatatable extends DataTable
                     return $item->dun;
                 });
             }
+            if (request()->nota->industria->id == 2) {
+                $table->addColumn('sigla', function($query) {
+                    $item = DadosCadastrais::where('codigo', $query->codigo_produto)->first();
+                    return $item->sigla;
+                });
+            }
             $table->addColumn('descricao', function($query) {
                 return $query->descricao;
             })
@@ -98,19 +104,23 @@ class ItensDatatable extends DataTable
     protected function getColumns()
     {
         $colunas = [
-            Column::make('industria')->title('Industria'),
-            Column::make('cliente')->title('Cliente'),
-            Column::make('numero')->title('Nota'),
-            Column::make('codigo_produto')->title('SKU'),
-            Column::make('descricao')->title('Descrição'),
-            Column::make('caixa_fardo')->title('Caixa/Fardo')->class('text-right'),
-            Column::make('peso_liquido')->title('Peso Líquido')->class('text-right'),
-            Column::make('armazenagem')->title('Armazenagem'),
-            Column::make('cidade')->title('Cidade')
+            0 => Column::make('industria')->title('Industria'),
+            1 => Column::make('cliente')->title('Cliente'),
+            2 => Column::make('numero')->title('Nota'),
+            3 => Column::make('codigo_produto')->title('SKU'),
+            5 => Column::make('descricao')->title('Descrição'),
+            6 => Column::make('caixa_fardo')->title('Caixa/Fardo')->class('text-right'),
+            7 => Column::make('peso_liquido')->title('Peso Líquido')->class('text-right'),
+            8 =>Column::make('armazenagem')->title('Armazenagem'),
+            9 => Column::make('cidade')->title('Cidade')
         ];
         if (request()->nota->industria->id == 2) {
             $colunas[] = Column::make('dun')->title('DUN'); 
         }
+        if (request()->nota->industria->id == 2) {
+            $colunas[4] = Column::make('sigla')->title('Sigla'); 
+        }
+        ksort($colunas);
         return $colunas;
     }
     public function voltar()
