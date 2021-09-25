@@ -26,12 +26,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notas/{nota}/edit', 'NotasController@edit')->name('notas.edit');
     Route::put('/notas/{nota}/update', 'NotasController@update')->name('notas.update');
     Route::get('/notas/{nota}/detele', 'NotasController@delete')->name('notas.delete');
+    Route::post('/notas/chegada', 'NotasController@alterarDataChegada')->name('notas.chegada');
+    Route::post('/notas/porto', 'NotasController@alterarDataChegadaPorto')->name('notas.porto');
+    Route::post('/notas/entrega', 'NotasController@alterarDataEntrega')->name('notas.entrega');
+
 
     Route::resource('clientes', 'ClienteController')->except(['destroy']);
     Route::get('/clientes/{cliente}/delete', 'ClienteController@delete')->name('clientes.delete');
 
     Route::resource('industrias', 'IndustriaController')->except(['destroy', 'store', 'create', 'show']);
-    // Route::get('/industrias/{industria}/delete', 'IndustriaController@delete')->name('industrias.delete');
 
     Route::resource('fretes', 'FreteController')->except(['destroy']);
     Route::get('/fretes/{frete}/delete', 'FreteController@delete')->name('fretes.delete');

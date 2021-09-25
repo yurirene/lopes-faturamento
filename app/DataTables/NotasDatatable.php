@@ -4,7 +4,6 @@ namespace App\DataTables;
 
 use App\Models\Nota;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -24,7 +23,7 @@ class NotasDatatable extends DataTable
         return datatables()
             ->eloquent($query)
             
-            ->addColumn('action', function($query) {
+            ->editColumn('action', function($query) {
                 return '<div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton' . $query->id . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Ações
@@ -95,7 +94,11 @@ class NotasDatatable extends DataTable
 
                 return $retorno;
             })
-            ->rawColumns(['action', 'canhoto']);
+            ->editColumn('checkbox', function($query) {
+                return "<input type='checkbox' class='form-control' name='linhas' id='checkbox' value='" . $query->id . "'>";
+            })
+           
+            ->rawColumns(['action', 'canhoto', 'checkbox']);
     }
 
     /**
@@ -137,7 +140,7 @@ class NotasDatatable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(5)
+                    ->orderBy(6)
                     ->buttons(
                         Button::make('excel')->text("<i class='fas fa-file-excel'></i> Exportar"),
                         Button::make('print')->text("<i class='fas fa-print'></i> Imprimir")
@@ -157,7 +160,8 @@ class NotasDatatable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('action')->title('Ações')->exportable(false)->printable(false),
+            Column::make('checkbox')->title('')->exportable(false)->printable(false)->searchable(false),
+            Column::make('action')->title('Ações')->exportable(false)->printable(false)->searchable(false),
             Column::make('industria_id')->title('Industria'),
             Column::make('cliente_id')->title('Cliente'),
             Column::make('numero')->title('Nota'),

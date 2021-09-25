@@ -72,5 +72,53 @@ class NotasController extends Controller
             return redirect()->route('notas.index', $nota)->withErrors('Erro ao Realizar Operação!');
         }
     }
+
+    public function alterarDataChegada(Request $request)
+    {
+        try {
+            $ids = explode(',', $request->ids);
+            foreach ($ids as $id) {
+                $nota = Nota::find($id);
+                $nota->update([
+                    'chegada' => Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d')
+                ]);
+            }
+            return redirect()->route('notas.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
+        } catch (\Throwable $th) {
+            return redirect()->route('notas.index')->withErrors('Erro ao Realizar Operação!');
+        }
+    }
+
+    public function alterarDataChegadaPorto(Request $request)
+    {
+        try {
+            $ids = explode(',', $request->ids);
+            foreach ($ids as $id) {
+                $nota = Nota::find($id);
+                $nota->update([
+                    'chegada_porto' => Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d')
+                ]);
+            }
+            return redirect()->route('notas.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
+        } catch (\Throwable $th) {
+            return redirect()->route('notas.index')->withErrors('Erro ao Realizar Operação!');
+        }
+    }
+
+    public function alterarDataEntrega(Request $request)
+    {
+        try {
+            $ids = explode(',', $request->ids);
+            foreach ($ids as $id) {
+                $nota = Nota::find($id);
+                $nota->update([
+                    'data_entrega' => Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d')
+                ]);
+            }
+            return redirect()->route('notas.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
+        } catch (\Throwable $th) {
+            return redirect()->route('notas.index')->withErrors('Erro ao Realizar Operação!');
+        }
+    }
     
 }
