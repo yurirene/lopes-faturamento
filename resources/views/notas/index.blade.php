@@ -124,6 +124,29 @@
         table.DataTable().ajax.reload();
         return false;
     });
+    $(document).on('click','#checkbox-master', function(){
+        var checkboxs = [];
+        var botao = '<div class="dropdown">'
+            +'<button class="btn btn-secondary dropdown-toggle" type="button" id="botao_editar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+                +'<i class="fas fa-calendar-alt"></i> Alterar Datas'
+                +'</button>'
+                +'<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">'
+                    +'<a class="dropdown-item"  onclick="alterar_data_chegada()"><i class="fas fa-truck-loading text-sm mr-2"></i> Chegada</a>'
+                    +'<a class="dropdown-item"  onclick="alterar_data_porto()"><i class="fas fa-ship text-sm mr-2"></i> Chegada no Porto</a>'
+                    +'<a class="dropdown-item"  onclick="alterar_data_entrega()"><i class="fas fa-shipping-fast text-sm mr-2"></i> Entrega</a>'
+                    +'</div></div>';
+        $('.isCheck').prop('checked', $(this).prop('checked'));
+        $("input:checkbox[name=linhas]:checked").each(function () {
+            checkboxs.push($(this).val());
+        });
+        if (checkboxs.length > 0) {
+            if (!$('.dt-buttons.btn-group.flex-wrap').find('#botao_editar').length){
+                $('.dt-buttons.btn-group.flex-wrap').append(botao);
+            }
+        } else {
+            $('#botao_editar').remove();
+        }
+    });
     
     $(document).on('click','#checkbox', function(){
         var checkboxs = [];
@@ -136,96 +159,96 @@
                     +'<a class="dropdown-item"  onclick="alterar_data_porto()"><i class="fas fa-ship text-sm mr-2"></i> Chegada no Porto</a>'
                     +'<a class="dropdown-item"  onclick="alterar_data_entrega()"><i class="fas fa-shipping-fast text-sm mr-2"></i> Entrega</a>'
                     +'</div></div>';
-                    $("input:checkbox[name=linhas]:checked").each(function () {
-                        checkboxs.push($(this).val());
-                    });
-                    if (checkboxs.length > 0) {
-                        if (!$('.dt-buttons.btn-group.flex-wrap').find('#botao_editar').length){
-                            $('.dt-buttons.btn-group.flex-wrap').append(botao);
-                        }
-                    } else {
-                        $('#botao_editar').remove();
-                    }
-                });
+        $("input:checkbox[name=linhas]:checked").each(function () {
+            checkboxs.push($(this).val());
+        });
+        if (checkboxs.length > 0) {
+            if (!$('.dt-buttons.btn-group.flex-wrap').find('#botao_editar').length){
+                $('.dt-buttons.btn-group.flex-wrap').append(botao);
+            }
+        } else {
+            $('#botao_editar').remove();
+        }
+    });
                 
-                function alterar_data_chegada()
-                {
-                    var ids = [];
-                    var route = "{{route('notas.chegada')}}";
-                    $("input:checkbox[name=linhas]:checked").each(function () {
-                        ids.push($(this).val());
-                    });
+    function alterar_data_chegada()
+    {
+        var ids = [];
+        var route = "{{route('notas.chegada')}}";
+        $("input:checkbox[name=linhas]:checked").each(function () {
+            ids.push($(this).val());
+        });
 
-                    $('#titulo_modal').text('Chegada');
-                    $('#label_modal').text('Data de Chegada');
-                    $('[name="ids"]').val(ids);
-                    $('#formulario_modal').attr('action', route);
+        $('#titulo_modal').text('Chegada');
+        $('#label_modal').text('Data de Chegada');
+        $('[name="ids"]').val(ids);
+        $('#formulario_modal').attr('action', route);
 
-                    $('#modal_data').modal('show');
-                    
-                    
-                    
-                }
+        $('#modal_data').modal('show');
+        
+        
+        
+    }
 
-                
-                function alterar_data_porto()
-                {
-                    var ids = [];
-                    var route = "{{route('notas.porto')}}";
-                    $("input:checkbox[name=linhas]:checked").each(function () {
-                        ids.push($(this).val());
-                    });
+    
+    function alterar_data_porto()
+    {
+        var ids = [];
+        var route = "{{route('notas.porto')}}";
+        $("input:checkbox[name=linhas]:checked").each(function () {
+            ids.push($(this).val());
+        });
 
-                    $('#titulo_modal').text('Chegada no Porto');
-                    $('#label_modal').text('Data de Chegada no Porto');
-                    $('[name="ids"]').val(ids);
-                    $('#formulario_modal').attr('action', route);
+        $('#titulo_modal').text('Chegada no Porto');
+        $('#label_modal').text('Data de Chegada no Porto');
+        $('[name="ids"]').val(ids);
+        $('#formulario_modal').attr('action', route);
 
-                    $('#modal_data').modal('show');
-                    
-                    
-                }
-                
-                function alterar_data_entrega()
-                {
-                    var ids = [];
-                    var route = "{{route('notas.entrega')}}";
-                    $("input:checkbox[name=linhas]:checked").each(function () {
-                        ids.push($(this).val());
-                    });
+        $('#modal_data').modal('show');
+        
+        
+    }
+    
+    function alterar_data_entrega()
+    {
+        var ids = [];
+        var route = "{{route('notas.entrega')}}";
+        $("input:checkbox[name=linhas]:checked").each(function () {
+            ids.push($(this).val());
+        });
 
-                    $('#titulo_modal').text('Entrega');
-                    $('#label_modal').text('Data de Entrega');
-                    $('[name="ids"]').val(ids);
-                    $('#formulario_modal').attr('action',  route);
-                    
-                    $('#modal_data').modal('show');
-                    
-                    
-                }
-                
-                
-            </script>
-            
-            @endpush
-            
-            @push('css')
-            <style>
-                .select2-selection__rendered {
-                    line-height: 20px !important;
-                }
-                .select2-container .select2-selection--single {
-                    height: 33px !important;
-                }
-                .select2-container .select2-selection--multiple {
-                    height: 33px !important;
-                }
-                .select2-selection__arrow {
-                    height: 34px !important;
-                }
-                
-                .input-group-sm .form-control {
-                    height: calc(2rem + 1px);
-                }
-            </style>
-            @endpush
+        $('#titulo_modal').text('Entrega');
+        $('#label_modal').text('Data de Entrega');
+        $('[name="ids"]').val(ids);
+        $('#formulario_modal').attr('action',  route);
+        
+        $('#modal_data').modal('show');
+        
+        
+    }
+    
+    
+</script>
+
+@endpush
+
+@push('css')
+<style>
+    .select2-selection__rendered {
+        line-height: 20px !important;
+    }
+    .select2-container .select2-selection--single {
+        height: 33px !important;
+    }
+    .select2-container .select2-selection--multiple {
+        height: 33px !important;
+    }
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+    
+    .input-group-sm .form-control {
+        height: calc(2rem + 1px);
+    }
+</style>
+@endpush

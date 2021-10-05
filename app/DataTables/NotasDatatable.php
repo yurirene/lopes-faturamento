@@ -95,7 +95,7 @@ class NotasDatatable extends DataTable
                 return $retorno;
             })
             ->editColumn('checkbox', function($query) {
-                return "<input type='checkbox' class='form-control' name='linhas' id='checkbox' value='" . $query->id . "'>";
+                return "<input type='checkbox' class='form-control isCheck' name='linhas' id='checkbox' value='" . $query->id . "'>";
             })
            
             ->rawColumns(['action', 'canhoto', 'checkbox']);
@@ -162,7 +162,7 @@ class NotasDatatable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('checkbox')->title('')->exportable(false)->printable(false)->searchable(false),
+            Column::make('checkbox')->title('<input type="checkbox" id="checkbox-master" />')->orderable(false)->exportable(false)->printable(false)->searchable(false),
             Column::make('action')->title('Ações')->exportable(false)->printable(false)->searchable(false),
             Column::make('industria_id')->title('Industria')->printable(false),
             Column::make('cliente_id')->title('Cliente'),
