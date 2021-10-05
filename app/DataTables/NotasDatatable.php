@@ -148,7 +148,9 @@ class NotasDatatable extends DataTable
                     ->parameters([
                         "language" => [
                             "url" => "//cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json"
-                        ]
+                        ],
+                        'scrollX' => true,
+                        "scrollY" => 400,
                     ]);
     }
 
@@ -162,27 +164,27 @@ class NotasDatatable extends DataTable
         return [
             Column::make('checkbox')->title('')->exportable(false)->printable(false)->searchable(false),
             Column::make('action')->title('Ações')->exportable(false)->printable(false)->searchable(false),
-            Column::make('industria_id')->title('Industria'),
+            Column::make('industria_id')->title('Industria')->printable(false),
             Column::make('cliente_id')->title('Cliente'),
             Column::make('numero')->title('Nota'),
-            Column::make('pedido_cliente')->title('Pedido Cliente'),
+            Column::make('pedido_cliente')->title('Pedido Cliente')->printable(false),
             Column::make('emissao')->title('Dt. Emissão')->class('text-center'),
             Column::make('chegada')->title('Dt. Chegada')->class('text-center'),
-            Column::make('chegada_porto')->title('Dt. Chegada Porto')->class('text-center'),
+            Column::make('chegada_porto')->title('Dt. Chegada Porto')->class('text-center')->printable(false),
             Column::make('valor_bruto')->title('Valor Bruto')->class('text-right'),
             Column::make('valor_liquido')->title('Valor Líquido')->class('text-right'),
             Column::make('peso_bruto')->title('Peso Bruto')->class('text-right'),
             Column::make('peso_liquido')->title('Peso Líquido')->class('text-right'),
-            Column::make('cidade_entrega')->title('Entrega'),
-            Column::make('cte')->title('Cte'),
-            Column::make('placa')->title('Placa'),
-            Column::make('transportadora')->title('Transportadora'),
-            Column::make('data_entrega')->title('Dt. Entrega')->class('text-center'),
-            Column::make('data_reentrega')->title('Dt. Reentrega')->class('text-center'),
-            Column::make('canhoto')->title('Canhoto')->class('text-center'),
-            Column::make('nf_devolucao')->title('NF Devolução'),
-            Column::make('valor_frete')->title('Valor Frete')->class('text-right'),
-            Column::make('observacao')->title('Observação'),
+            Column::make('cidade_entrega')->title('Entrega')->printable(false),
+            Column::make('cte')->title('Cte')->printable(false),
+            Column::make('placa')->title('Placa')->printable(false),
+            Column::make('transportadora')->title('Transportadora')->printable(false),
+            Column::make('data_entrega')->title('Dt. Entrega')->class('text-center')->printable(false),
+            Column::make('data_reentrega')->title('Dt. Reentrega')->class('text-center')->printable(false),
+            Column::make('canhoto')->title('Canhoto')->class('text-center')->printable(false),
+            Column::make('nf_devolucao')->title('NF Devolução')->printable(false),
+            Column::make('valor_frete')->title('Valor Frete')->class('text-right')->printable(false),
+            Column::make('observacao')->title('Observação')->printable(false),
         ];
     }
 
