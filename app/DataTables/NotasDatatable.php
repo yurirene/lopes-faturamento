@@ -151,6 +151,7 @@ class NotasDatatable extends DataTable
                         ],
                         'scrollX' => true,
                         "scrollY" => 400,
+                        "lengthMenu" => [100]
                     ]);
     }
 
