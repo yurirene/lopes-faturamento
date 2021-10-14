@@ -40,6 +40,11 @@ class NotasDatatable extends DataTable
                 return $query->industria->razao_social;
             })
 
+
+            ->editColumn('industria_cnpj', function($query) {
+                return $query->industria->cnpj;
+            })
+
             ->editColumn('cliente_id', function($query) {
                 return $query->cliente->razao_social;
             })
@@ -165,6 +170,7 @@ class NotasDatatable extends DataTable
         return [
             Column::make('checkbox')->title('<input type="checkbox" id="checkbox-master" />')->orderable(false)->exportable(false)->printable(false)->searchable(false),
             Column::make('action')->title('Ações')->exportable(false)->printable(false)->searchable(false),
+            Column::make('industria_cnpj')->title('CNPJ'),
             Column::make('industria_id')->title('Industria')->printable(false),
             Column::make('cliente_id')->title('Cliente'),
             Column::make('numero')->title('Nota'),

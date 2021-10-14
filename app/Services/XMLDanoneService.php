@@ -20,6 +20,7 @@ class XMLDanoneService extends XMLService
     {
         try {
             $industria = Industria::find($request['industria']);
+            $frete = $request['frete'];
             $notas = array();
             foreach ($request['arquivos'] as $arquivo) {
                 $xml = self::converterXMLParaArray($arquivo);
@@ -31,19 +32,19 @@ class XMLDanoneService extends XMLService
             if ($quantidade_importada == 0) {
                 throw new Exception('As notas não correspodem com a industria selecionada ou já foram importadas');
             }
-            self::store($notas, $industria);
+            self::store($notas, $industria, $frete);
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
-    public static function store($notas, $industria)
+    public static function store($notas, $industria, $frete)
     {
         DB::beginTransaction();
         try {
             foreach ($notas as $nota) {
                 $cliente  = self::buscaOuCriaCliente($nota);
-                $informacoes = self::informacoesNota($nota);
+                $informacoes = self::informacoesNota($nota, $frete);
                 $informacoes['cliente_id'] = $cliente->id;
                 $informacoes['industria_id'] = $industria->id;
                 $nova_nota = Nota::create($informacoes);
@@ -60,9 +61,8 @@ class XMLDanoneService extends XMLService
     /**
      * Retorna todas as informações pertinentes à Model\Nota em um array
      */
-    public static function informacoesNota($nota)
+    public static function informacoesNota($nota, $frete)
     {
-        $fator = Frete::where('codigo', $nota['dest']['enderDest']['cMun'])->first()->fator;
         $retorno = [
             'numero' => $nota['ide']['nNF'],
             'pedido_cliente' => 'S/N',
@@ -73,7 +73,7 @@ class XMLDanoneService extends XMLService
             'peso_bruto' => $nota['transp']['vol']['pesoB'],
             'cidade_entrega' => $nota['dest']['enderDest']['xMun'],
             'transportadora' => $nota['transp']['transporta']['xNome'],
-            'valor_frete' => floatval($nota['transp']['vol']['pesoB']) * floatval($fator)
+            'valor_frete' => floatval($nota['transp']['vol']['pesoB']) * floatval($frete)
         ];
         return $retorno;
     }
