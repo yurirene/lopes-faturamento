@@ -41,8 +41,8 @@ class NotasDatatable extends DataTable
             })
 
 
-            ->editColumn('industria_cnpj', function($query) {
-                return $query->industria->cnpj;
+            ->editColumn('cliente_cnpj', function($query) {
+                return $query->cliente->cnpj;
             })
 
             ->editColumn('cliente_id', function($query) {
@@ -62,11 +62,11 @@ class NotasDatatable extends DataTable
             })
             
             ->editColumn('valor_bruto', function($query) {
-                return "R$ " . number_format($query->valor_bruto, 2, ',', ' ');
+                return "R$ " . number_format($query->valor_liquido, 2, ',', ' ');
             })
             
             ->editColumn('valor_liquido', function($query) {
-                return "R$ " . number_format($query->valor_liquido, 2, ',', ' ');
+                return "R$ " . number_format($query->valor_bruto, 2, ',', ' ');
             })
             
             ->editColumn('peso_bruto', function($query) {
@@ -170,8 +170,8 @@ class NotasDatatable extends DataTable
         return [
             Column::make('checkbox')->title('<input type="checkbox" id="checkbox-master" />')->orderable(false)->exportable(false)->printable(false)->searchable(false),
             Column::make('action')->title('Ações')->exportable(false)->printable(false)->searchable(false),
-            Column::make('industria_cnpj')->title('CNPJ'),
             Column::make('industria_id')->title('Industria')->printable(false),
+            Column::make('cliente_cnpj')->title('CNPJ'),
             Column::make('cliente_id')->title('Cliente'),
             Column::make('numero')->title('Nota'),
             Column::make('pedido_cliente')->title('Pedido Cliente')->printable(false),

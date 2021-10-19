@@ -251,6 +251,13 @@ return [
             'icon' => 'fas fa-fw fa-building',
         ],
 
+
+        [
+            'text' => 'Frete Danone',
+            'url'  => '/frete-danone',
+            'icon' => 'fas fa-fw fa-truck-moving',
+        ],
+
         [
             'text' => 'Frete',
             'url'  => '/fretes',

@@ -38,6 +38,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('fretes', 'FreteController')->except(['destroy']);
     Route::get('/fretes/{frete}/delete', 'FreteController@delete')->name('fretes.delete');
+
+    Route::get('/frete-danone', 'FreteDanoneController@index')->name('frete-danone.index');
+    Route::put('/frete-danone/{frete}', 'FreteDanoneController@salvar')->name('frete-danone.salvar');
     
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\FreteDanone;
 use App\Models\Cliente;
 use App\Models\DadosCadastrais;
 use App\Models\Frete;
@@ -20,7 +21,7 @@ class XMLDanoneService extends XMLService
     {
         try {
             $industria = Industria::find($request['industria']);
-            $frete = $request['frete'];
+            $frete = FreteDanone::first()->fator;
             $notas = array();
             foreach ($request['arquivos'] as $arquivo) {
                 $xml = self::converterXMLParaArray($arquivo);
