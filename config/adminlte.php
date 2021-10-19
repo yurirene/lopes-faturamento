@@ -255,7 +255,7 @@ return [
         [
             'text' => 'Frete Danone',
             'url'  => '/frete-danone',
-            'icon' => 'fas fa-fw fa-truck-moving',
+            'icon' => 'fas fa-fw fa-truck',
         ],
 
         [
