@@ -143,6 +143,8 @@
                         <div class="form-group">
                             <label id="">Nº da Placa</label>
                             <input type="text" name="numero" class="form-control" autocomplete="off" required>
+                            <label id="">Nome da Transportadora</label>
+                            <input type="text" name="nome" class="form-control" autocomplete="off" required>
                         </div>
                         <input type='hidden' name="ids_placa" id="ids_placa" required>
                     </div>
@@ -187,7 +189,7 @@
                         +'<i class="fas fa-route"></i> Nº da Viagem'
                     +'</button>' 
                     +'<button class="btn btn-secondary" type="button" id="botao_placa"  onclick="alterar_numero_placa()">'
-                        +'<i class="fas fa-bus"></i> Placa'
+                        +'<i class="fas fa-truck-moving"></i> Transportadora'
                     +'</button>' 
             +'<div class="dropdown">'
             +'<button class="btn btn-secondary dropdown-toggle" type="button" id="botao_editar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
@@ -219,7 +221,7 @@
                 +'<i class="fas fa-route"></i> Nº da Viagem'
             +'</button>' 
             +'<button class="btn btn-secondary" type="button" id="botao_placa"  onclick="alterar_numero_placa()">'
-                +'<i class="fas fa-bus"></i> Placa'
+                +'<i class="fas fa-truck-moving"></i> Transportadora'
             +'</button>' 
             +'<div class="dropdown">'
             +'<button class="btn btn-secondary dropdown-toggle" type="button" id="botao_editar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'

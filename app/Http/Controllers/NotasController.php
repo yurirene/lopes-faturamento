@@ -146,7 +146,8 @@ class NotasController extends Controller
             foreach ($ids as $id) {
                 $nota = Nota::find($id);
                 $nota->update([
-                    'placa' => $request->numero
+                    'placa' => $request->numero,
+                    'transportadora' => $request->nome
                 ]);
             }
             return redirect()->route('notas.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
