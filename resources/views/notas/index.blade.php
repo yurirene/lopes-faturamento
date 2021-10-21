@@ -98,6 +98,35 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modal_viagem" tabindex="-1" aria-labelledby="modal_viagem" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_viagem">Alterar Nº da Viagem</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+                <form method="post" action="{{route('notas.numero-viagem')}}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label id="">Nº da Viagem</label>
+                            <input type="text" name="numero" class="form-control" required>
+                        </div>
+                        <input type='hidden' name="ids_viagens" id="ids_viagens" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class='fas fa-block'></i> Cancelar</button>
+                        <button type="submit" class="btn btn-success"><i class='fas fa-save'></i> Salvar</button>
+                    </div>
+                </form>
+           
+        </div>
+    </div>
+</div>
 @stop
 
 @push('js')
@@ -126,15 +155,18 @@
     });
     $(document).on('click','#checkbox-master', function(){
         var checkboxs = [];
-        var botao = '<div class="dropdown">'
+        var botao = '<button class="btn btn-secondary" type="button" id="botao_viagem"  onclick="alterar_numero_viagem()">'
+                        +'<i class="fas fa-route"></i> Nº da Viagem'
+                    +'</button>' 
+            +'<div class="dropdown">'
             +'<button class="btn btn-secondary dropdown-toggle" type="button" id="botao_editar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
                 +'<i class="fas fa-calendar-alt"></i> Alterar Datas'
-                +'</button>'
-                +'<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">'
-                    +'<a class="dropdown-item"  onclick="alterar_data_chegada()"><i class="fas fa-truck-loading text-sm mr-2"></i> Chegada</a>'
-                    +'<a class="dropdown-item"  onclick="alterar_data_porto()"><i class="fas fa-ship text-sm mr-2"></i> Chegada no Porto</a>'
-                    +'<a class="dropdown-item"  onclick="alterar_data_entrega()"><i class="fas fa-shipping-fast text-sm mr-2"></i> Entrega</a>'
-                    +'</div></div>';
+            +'</button>'
+            +'<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">'
+                +'<a class="dropdown-item"  onclick="alterar_data_chegada()"><i class="fas fa-truck-loading text-sm mr-2"></i> Chegada</a>'
+                +'<a class="dropdown-item"  onclick="alterar_data_porto()"><i class="fas fa-ship text-sm mr-2"></i> Chegada no Porto</a>'
+                +'<a class="dropdown-item"  onclick="alterar_data_entrega()"><i class="fas fa-shipping-fast text-sm mr-2"></i> Entrega</a>'
+            +'</div></div>';
         $('.isCheck').prop('checked', $(this).prop('checked'));
         $("input:checkbox[name=linhas]:checked").each(function () {
             checkboxs.push($(this).val());
@@ -145,12 +177,16 @@
             }
         } else {
             $('#botao_editar').remove();
+            $('#botao_viagem').remove();
         }
     });
     
     $(document).on('click','#checkbox', function(){
         var checkboxs = [];
-        var botao = '<div class="dropdown">'
+        var botao = '<button class="btn btn-secondary" type="button" id="botao_viagem" onclick="alterar_numero_viagem()">'
+                +'<i class="fas fa-route"></i> Nº da Viagem'
+            +'</button>' 
+            +'<div class="dropdown">'
             +'<button class="btn btn-secondary dropdown-toggle" type="button" id="botao_editar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
                 +'<i class="fas fa-calendar-alt"></i> Alterar Datas'
                 +'</button>'
@@ -167,6 +203,7 @@
                 $('.dt-buttons.btn-group.flex-wrap').append(botao);
             }
         } else {
+            $('#botao_viagem').remove();
             $('#botao_editar').remove();
         }
     });
@@ -184,10 +221,7 @@
         $('[name="ids"]').val(ids);
         $('#formulario_modal').attr('action', route);
 
-        $('#modal_data').modal('show');
-        
-        
-        
+        $('#modal_data').modal('show');        
     }
 
     
@@ -225,6 +259,17 @@
         $('#modal_data').modal('show');
         
         
+    }
+
+    function alterar_numero_viagem()
+    {
+        var ids = [];
+        $("input:checkbox[name=linhas]:checked").each(function () {
+            ids.push($(this).val());
+        });
+        $('[name="ids_viagens"]').val(ids);
+
+        $('#modal_viagem').modal('show');        
     }
     
     

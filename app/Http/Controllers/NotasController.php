@@ -53,7 +53,9 @@ class NotasController extends Controller
                 'data_entrega' => $request->data_entrega ? Carbon::createFromFormat('d/m/Y', $request->data_entrega)->format('Y-m-d') : null,
                 'canhoto' => $request->canhoto,
                 'nf_devolucao' => $request->nf_devolucao,
-                'observacao' => $request->observacao
+                'observacao' => $request->observacao,
+                'numero_viagem' => $request->numero_viagem,
+                'numero_embarque' => $request->numero_embarque
             ]);
             return redirect()->route('notas.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
         } catch (\Throwable $th) {
@@ -113,6 +115,22 @@ class NotasController extends Controller
                 $nota = Nota::find($id);
                 $nota->update([
                     'data_entrega' => Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d')
+                ]);
+            }
+            return redirect()->route('notas.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
+        } catch (\Throwable $th) {
+            return redirect()->route('notas.index')->withErrors('Erro ao Realizar Operação!');
+        }
+    }
+
+    public function alterarNumeroViagem(Request $request)
+    {
+        try {
+            $ids = explode(',', $request->ids_viagens);
+            foreach ($ids as $id) {
+                $nota = Nota::find($id);
+                $nota->update([
+                    'numero_viagem' => $request->numero
                 ]);
             }
             return redirect()->route('notas.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);

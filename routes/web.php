@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/notas/chegada', 'NotasController@alterarDataChegada')->name('notas.chegada');
     Route::post('/notas/porto', 'NotasController@alterarDataChegadaPorto')->name('notas.porto');
     Route::post('/notas/entrega', 'NotasController@alterarDataEntrega')->name('notas.entrega');
+    Route::post('/notas/numero-viagem', 'NotasController@alterarNumeroViagem')->name('notas.numero-viagem');
 
 
     Route::resource('clientes', 'ClienteController')->except(['destroy']);
