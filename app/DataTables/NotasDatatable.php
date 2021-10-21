@@ -183,6 +183,7 @@ class NotasDatatable extends DataTable
             Column::make('cte')->title('Cte'),
             Column::make('peso_bruto')->title('Peso Bruto')->class('text-right'),
             Column::make('peso_liquido')->title('Peso Líquido')->class('text-right')->printable(false),
+            Column::make('numero_viagem')->title('Nº Viagem')->class('text-right')->printable(false),
             Column::make('cidade_entrega')->title('Entrega')->printable(false),
             Column::make('placa')->title('Placa')->printable(false),
             Column::make('transportadora')->title('Transportadora')->printable(false),
