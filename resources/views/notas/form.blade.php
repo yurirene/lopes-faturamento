@@ -110,16 +110,7 @@
                             {!! Form::label('numero_viagem', 'Nº da Viagem') !!}
                             {!! Form::text('numero_viagem', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
-                        
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            {!! Form::label('numero_embarque', 'Nº do Embarque') !!}
-                            {!! Form::text('numero_embarque', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('observacao', 'Observação') !!}

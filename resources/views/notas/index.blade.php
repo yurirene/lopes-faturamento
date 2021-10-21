@@ -85,7 +85,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label id="label_modal"></label>
-                            <input type="text" name="date" class="form-control isDate" required>
+                            <input type="text" name="date" class="form-control isDate" autocomplete="off" required>
                         </div>
                         <input type='hidden' name="ids" id="ids" required>
                     </div>
@@ -114,9 +114,37 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label id="">Nº da Viagem</label>
-                            <input type="text" name="numero" class="form-control" required>
+                            <input type="text" name="numero" class="form-control" autocomplete="off" required>
                         </div>
                         <input type='hidden' name="ids_viagens" id="ids_viagens" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class='fas fa-block'></i> Cancelar</button>
+                        <button type="submit" class="btn btn-success"><i class='fas fa-save'></i> Salvar</button>
+                    </div>
+                </form>
+           
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal_placa" tabindex="-1" aria-labelledby="modal_placa" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_placa">Alterar Nº da Placa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+                <form method="post" action="{{route('notas.numero-placa')}}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label id="">Nº da Placa</label>
+                            <input type="text" name="numero" class="form-control" autocomplete="off" required>
+                        </div>
+                        <input type='hidden' name="ids_placa" id="ids_placa" required>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class='fas fa-block'></i> Cancelar</button>
@@ -158,6 +186,9 @@
         var botao = '<button class="btn btn-secondary" type="button" id="botao_viagem"  onclick="alterar_numero_viagem()">'
                         +'<i class="fas fa-route"></i> Nº da Viagem'
                     +'</button>' 
+                    +'<button class="btn btn-secondary" type="button" id="botao_placa"  onclick="alterar_numero_placa()">'
+                        +'<i class="fas fa-bus"></i> Placa'
+                    +'</button>' 
             +'<div class="dropdown">'
             +'<button class="btn btn-secondary dropdown-toggle" type="button" id="botao_editar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
                 +'<i class="fas fa-calendar-alt"></i> Alterar Datas'
@@ -177,6 +208,7 @@
             }
         } else {
             $('#botao_editar').remove();
+            $('#botao_placa').remove();
             $('#botao_viagem').remove();
         }
     });
@@ -185,6 +217,9 @@
         var checkboxs = [];
         var botao = '<button class="btn btn-secondary" type="button" id="botao_viagem" onclick="alterar_numero_viagem()">'
                 +'<i class="fas fa-route"></i> Nº da Viagem'
+            +'</button>' 
+            +'<button class="btn btn-secondary" type="button" id="botao_placa"  onclick="alterar_numero_placa()">'
+                +'<i class="fas fa-bus"></i> Placa'
             +'</button>' 
             +'<div class="dropdown">'
             +'<button class="btn btn-secondary dropdown-toggle" type="button" id="botao_editar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
@@ -203,6 +238,7 @@
                 $('.dt-buttons.btn-group.flex-wrap').append(botao);
             }
         } else {
+            $('#botao_placa').remove();
             $('#botao_viagem').remove();
             $('#botao_editar').remove();
         }
@@ -270,6 +306,17 @@
         $('[name="ids_viagens"]').val(ids);
 
         $('#modal_viagem').modal('show');        
+    }
+
+    function alterar_numero_placa()
+    {
+        var ids = [];
+        $("input:checkbox[name=linhas]:checked").each(function () {
+            ids.push($(this).val());
+        });
+        $('[name="ids_placa"]').val(ids);
+
+        $('#modal_placa').modal('show');        
     }
     
     

@@ -138,5 +138,21 @@ class NotasController extends Controller
             return redirect()->route('notas.index')->withErrors('Erro ao Realizar Operação!');
         }
     }
+
+    public function alterarNumeroPlaca(Request $request)
+    {
+        try {
+            $ids = explode(',', $request->ids_placa);
+            foreach ($ids as $id) {
+                $nota = Nota::find($id);
+                $nota->update([
+                    'placa' => $request->numero
+                ]);
+            }
+            return redirect()->route('notas.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
+        } catch (\Throwable $th) {
+            return redirect()->route('notas.index')->withErrors('Erro ao Realizar Operação!');
+        }
+    }
     
 }
