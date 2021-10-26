@@ -30,8 +30,8 @@ class XMLService
     {
         try {
             $end = $nota['dest']['enderDest'];
-            return Cliente::firstOrCreate(['cnpj' => $nota['dest']['CNPJ']], [
-                'cnpj' => $nota['dest']['CNPJ'],
+            return Cliente::firstOrCreate(['cnpj' => str_replace(['.', '/', '-'], '', $nota['dest']['CNPJ'])], [
+                'cnpj' => str_replace(['.', '/', '-'], '', $nota['dest']['CNPJ']),
                 'razao_social' =>  $nota['dest']['xNome'],
                 'endereco' => $end['xLgr'] .", " .$end['nro'] .", " .$end['CEP']. ", " .$end['xBairro'],
                 'cidade' => $end['xMun'],
