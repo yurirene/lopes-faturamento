@@ -62,19 +62,19 @@ class NotasDatatable extends DataTable
             })
             
             ->editColumn('valor_bruto', function($query) {
-                return "R$ " . number_format($query->valor_liquido, 2, ',', ' ');
+                return $query->valor_liquido;
             })
             
             ->editColumn('valor_liquido', function($query) {
-                return "R$ " . number_format($query->valor_bruto, 2, ',', ' ');
+                return $query->valor_bruto;
             })
             
             ->editColumn('peso_bruto', function($query) {
-                return number_format($query->peso_bruto, 2, '.', ' ');
+                return $query->peso_bruto;
             })
             
             ->editColumn('peso_liquido', function($query) {
-                return number_format($query->peso_liquido, 2, '.', ' ');
+                return $query->peso_liquido;
             })
 
             ->editColumn('data_entrega', function($query) {
@@ -86,7 +86,7 @@ class NotasDatatable extends DataTable
             })
             
             ->editColumn('valor_frete', function($query) {
-                return "R$ " . number_format($query->valor_frete, 2, ',', ' ');
+                return $query->valor_frete;
             })
             
             ->editColumn('canhoto', function($query) {
