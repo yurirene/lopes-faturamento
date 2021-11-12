@@ -26,18 +26,18 @@
                                     <div class="col-6">
                                         <div class="form-group input-group-sm">
                                             {!! Form::label('industrias', 'Industrias') !!}
-                                            {!! Form::select('industrias', $industrias, null, ['class' => 'form-control isSelect2', 'required' => 'required', 'id' => 'industria', 'multiple' => 'multiple']) !!}
+                                            {!! Form::select('industrias', $industrias, isset(session('filtros')['industria']) ? session('filtros')['industria'] : null, ['class' => 'form-control isSelect2', 'required' => 'required', 'id' => 'industria', 'multiple' => 'multiple']) !!}
                                         </div>
                                         <div class="form-group input-group-sm">
                                             {!! Form::label('clientes', 'Clientes') !!}
-                                            {!! Form::select('clientes', $clientes, null, ['class' => 'form-control isSelect2', 'required' => 'required', 'id' => 'cliente', 'multiple' => 'multiple']) !!}
+                                            {!! Form::select('clientes', $clientes, isset(session('filtros')['cliente']) ? session('filtros')['cliente'] : null, ['class' => 'form-control isSelect2', 'required' => 'required', 'id' => 'cliente', 'multiple' => 'multiple']) !!}
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group input-group-sm">
                                             {!! Form::label('periodo', 'Período de Emissão') !!}
                                             <div class="input-group">
-                                                {!! Form::text('periodo', null, ['class' => 'form-control isDateRange', 'id'=>'periodo', 'autocomplete' => 'off']) !!}
+                                                {!! Form::text('periodo', (isset(session('filtros')['periodo']) && !empty(session('filtros')['periodo'])) ? session('filtros')['periodo']  : null, ['class' => 'form-control isDateRange', 'id'=>'periodo', 'autocomplete' => 'off']) !!}
                                                 <div class="input-group-append">
                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                 </div>
@@ -157,6 +157,34 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal_cte" tabindex="-1" aria-labelledby="modal_cte" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_placa">Alterar Cte</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+                <form method="post" action="{{route('notas.numero-cte')}}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label id="">Cte</label>
+                            <input type="text" name="cte" class="form-control" autocomplete="off" required>
+                        </div>
+                        <input type='hidden' name="ids_cte" id="ids_cte" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class='fas fa-block'></i> Cancelar</button>
+                        <button type="submit" class="btn btn-success"><i class='fas fa-save'></i> Salvar</button>
+                    </div>
+                </form>
+           
+        </div>
+    </div>
+</div>
 @stop
 
 @push('js')
@@ -172,16 +200,41 @@
     });
     
     $('#filtrar').on('click', function (){
-        table.DataTable().ajax.reload();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        // SETA NA SESSION OS PARAMETROS PARA FILTRAR NA PROXIMA REQUISICAO
+        $.ajax({
+            url: '{{route("notas.filtrar")}}',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                industria: $('#industria').val(),
+                cliente: $('#cliente').val(),
+                periodo: $('#periodo').val()
+            },
+        }).done(reponse => {
+            table.DataTable().ajax.reload();
+        });       
         return false;
     });
     
     $('#resetar').on('click', function (){
-        $('#industria').val(null).trigger('change');
-        $('#cliente').val(null).trigger('change');
-        $('#periodo').val('');
-        table.DataTable().ajax.reload();
+
+        $.ajax({
+            url: '{{route("notas.resetar")}}',
+            type: 'GET',
+        }).done(reponse => {
+            $('#industria').val(null).trigger('change');
+            $('#cliente').val(null).trigger('change');
+            $('#periodo').val('');
+            table.DataTable().ajax.reload();
+        });
         return false;
+
     });
     $(document).on('click','#checkbox-master', function(){
         var checkboxs = [];
@@ -190,6 +243,9 @@
                     +'</button>' 
                     +'<button class="btn btn-secondary" type="button" id="botao_placa"  onclick="alterar_numero_placa()">'
                         +'<i class="fas fa-truck-moving"></i> Transportadora'
+                    +'</button>' 
+                    +'<button class="btn btn-secondary" type="button" id="botao_cte"  onclick="alterar_numero_cte()">'
+                        +'<i class="fas fa-passport"></i> Cte'
                     +'</button>' 
             +'<div class="dropdown">'
             +'<button class="btn btn-secondary dropdown-toggle" type="button" id="botao_editar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
@@ -212,6 +268,7 @@
             $('#botao_editar').remove();
             $('#botao_placa').remove();
             $('#botao_viagem').remove();
+            $('#botao_cte').remove();
         }
     });
     
@@ -222,6 +279,9 @@
             +'</button>' 
             +'<button class="btn btn-secondary" type="button" id="botao_placa"  onclick="alterar_numero_placa()">'
                 +'<i class="fas fa-truck-moving"></i> Transportadora'
+            +'</button>' 
+            +'<button class="btn btn-secondary" type="button" id="botao_cte"  onclick="alterar_numero_cte()">'
+                +'<i class="fas fa-passport"></i> Cte'
             +'</button>' 
             +'<div class="dropdown">'
             +'<button class="btn btn-secondary dropdown-toggle" type="button" id="botao_editar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
@@ -243,6 +303,7 @@
             $('#botao_placa').remove();
             $('#botao_viagem').remove();
             $('#botao_editar').remove();
+            $('#botao_cte').remove();
         }
     });
                 
@@ -319,6 +380,17 @@
         $('[name="ids_placa"]').val(ids);
 
         $('#modal_placa').modal('show');        
+    }
+
+    function alterar_numero_cte()
+    {
+        var ids = [];
+        $("input:checkbox[name=linhas]:checked").each(function () {
+            ids.push($(this).val());
+        });
+        $('[name="ids_cte"]').val(ids);
+
+        $('#modal_cte').modal('show');        
     }
     
     

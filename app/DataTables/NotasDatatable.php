@@ -42,7 +42,7 @@ class NotasDatatable extends DataTable
 
 
             ->editColumn('cliente_cnpj', function($query) {
-                return $query->cliente->cnpj;
+                return $query->cliente->cnpj_formatado;
             })
 
             ->editColumn('cliente_id', function($query) {
@@ -53,12 +53,13 @@ class NotasDatatable extends DataTable
                 return $query->emissao ? $query->emissao->format('d/m/y') : null;
             })
 
-            ->editColumn('chegada', function($query) {
-                return $query->chegada ? $query->chegada->format('d/m/y') : null;
-            })
             
             ->editColumn('chegada_porto', function($query) {
                 return $query->chegada_porto ? $query->chegada_porto->format('d/m/y') : null;
+            })
+
+            ->editColumn('chegada', function($query) {
+                return $query->chegada ? $query->chegada->format('d/m/y') : null;
             })
             
             ->editColumn('valor_bruto', function($query) {
@@ -115,19 +116,23 @@ class NotasDatatable extends DataTable
     public function query(Nota $model)
     {
 
+        $periodo = request()->has('periodo') ? request('periodo') : session('filtros')['periodo'] ?? null; 
+        $cliente = request()->has('cliente') ? request('cliente') : session('filtros')['cliente'] ?? null; 
+        $industria = request()->has('industria') ? request('industria') : session('filtros')['industria'] ?? null; 
+
         $query = $model->newQuery();
-        $query->when(request('periodo'), function ($q) {
-            $datas = explode(' - ',request('periodo'));
-            $periodo[0] = Carbon::createFromFormat('d/m/Y', $datas[0])->format('Y-m-d');
-            $periodo[1] = Carbon::createFromFormat('d/m/Y', $datas[1])->format('Y-m-d');
-            return $q->whereBetween('emissao', $periodo);
+        $query->when($periodo, function ($q) use ($periodo) {
+            $datas = explode(' - ',$periodo);
+            $dates[0] = Carbon::createFromFormat('d/m/Y', $datas[0])->format('Y-m-d');
+            $dates[1] = Carbon::createFromFormat('d/m/Y', $datas[1])->format('Y-m-d');
+            return $q->whereBetween('emissao', $dates);
         });
-        $query->when(request('industria'), function ($q) {
-            return $q->whereIn('industria_id', request('industria'));
+        $query->when($industria, function ($q) use ($industria) {
+            return $q->whereIn('industria_id', $industria);
         });
 
-        $query->when(request('cliente'), function ($q) {
-            return $q->whereIn('cliente_id', request('cliente'));
+        $query->when($cliente, function ($q) use ($cliente) {
+            return $q->whereIn('cliente_id', $cliente);
         });
 
         return $query;
@@ -176,8 +181,8 @@ class NotasDatatable extends DataTable
             Column::make('numero')->title('Nota'),
             Column::make('pedido_cliente')->title('Pedido')->printable(true),
             Column::make('emissao')->title('Dt. Emissão')->class('text-center'),
-            Column::make('chegada')->title('Dt. Chegada')->class('text-center')->printable(false),
             Column::make('chegada_porto')->title('Dt. Chegada Porto')->class('text-center')->printable(false),
+            Column::make('chegada')->title('Dt. Chegada')->class('text-center')->printable(false),
             Column::make('valor_bruto')->title('Valor Bruto')->class('text-right')->printable(false),
             Column::make('valor_liquido')->title('Valor Líquido')->class('text-right'),
             Column::make('cte')->title('Cte'),

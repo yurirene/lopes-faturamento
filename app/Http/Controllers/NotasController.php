@@ -155,5 +155,44 @@ class NotasController extends Controller
             return redirect()->route('notas.index')->withErrors('Erro ao Realizar Operação!');
         }
     }
+
+    public function alterarNumeroCte(Request $request)
+    {
+        try {
+            $ids = explode(',', $request->ids_cte);
+            foreach ($ids as $id) {
+                $nota = Nota::find($id);
+                $nota->update([
+                    'cte' => $request->cte,
+                ]);
+            }
+            return redirect()->route('notas.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
+        } catch (\Throwable $th) {
+            return redirect()->route('notas.index')->withErrors('Erro ao Realizar Operação!');
+        }
+    }
+
+    public function filtrar(Request $request)
+    {
+        $request = $request->all();
+        $filtros = [];
+        if (isset($request['industria'])) {
+            $filtros['industria'] = $request['industria'];
+        }
+        if (isset($request['cliente'])) {
+            $filtros['cliente'] =  $request['cliente'];
+        }
+        if (isset($request['periodo'])) {
+            $filtros['periodo'] = $request['periodo'];
+        }
+
+        session()->put('filtros', $filtros);
+        return response()->json(['resposta' => true], 200);
+    }
+
+    public function resetar()
+    {
+        session()->forget('filtros');
+    }
     
 }

@@ -31,6 +31,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/notas/entrega', 'NotasController@alterarDataEntrega')->name('notas.entrega');
     Route::post('/notas/numero-viagem', 'NotasController@alterarNumeroViagem')->name('notas.numero-viagem');
     Route::post('/notas/numero-placa', 'NotasController@alterarNumeroPlaca')->name('notas.numero-placa');
+    Route::post('/notas/numero-cte', 'NotasController@alterarNumeroCte')->name('notas.numero-cte');
+    Route::post('/notas/filtrar', 'NotasController@filtrar')->name('notas.filtrar');
+    Route::get('/notas/restar', 'NotasController@resetar')->name('notas.resetar');
+
 
 
     Route::resource('clientes', 'ClienteController')->except(['destroy']);

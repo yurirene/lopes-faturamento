@@ -34,6 +34,9 @@ class ClientesDatatable extends DataTable
                 </div>
               </div>';
             })
+            ->editColumn('cnpj', function($query) {
+                return $query->cnpj_formatado;
+            })
             ->rawColumns(['action']);
     }
 
