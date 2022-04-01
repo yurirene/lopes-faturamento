@@ -7,7 +7,8 @@ class XMLFactory
     private $services = [
         1 => 'XMLTourinhoService',
         2 => 'XMLCatupiryService',
-        3 => 'XMLDanoneService'
+        3 => 'XMLDanoneService',
+        4 => 'XMLTourinhoService'
     ];
 
     public function service($industria)
