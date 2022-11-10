@@ -116,6 +116,7 @@ class XMLDanoneService extends XMLService
             'codigo_produto' => $item['prod']['cProd'],
             'descricao' => $item['prod']['xProd'],
             'caixa_fardo' => $item['prod']['qCom'],
+            'valor_unitario' => isset($item['prod']['vUnCom']) ? floatval($item['prod']['vUnCom']) : null
         );
         return $retorno;
     }

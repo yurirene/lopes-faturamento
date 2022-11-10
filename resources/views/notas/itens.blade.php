@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="table-responsive text-nowrap">
-                            {{ $dataTable->table() }}
+                            {{ $dataTable->table(['class' => 'table w-100']) }}
                         </div>
                     </div>
                 </div>

@@ -54,6 +54,9 @@ class ItensDatatable extends DataTable
             })
             ->editColumn('peso_liquido', function($query) {
                 return $query->peso_liquido ;
+            })
+            ->editColumn('valor_unitario', function($query) {
+                return $query->valor_unitario ;
             });
         return $table;
     }
@@ -111,6 +114,7 @@ class ItensDatatable extends DataTable
             2 => Column::make('numero')->title('Nota'),
             3 => Column::make('codigo_produto')->title('SKU'),
             5 => Column::make('descricao')->title('Descrição'),
+            5 => Column::make('valor_unitario')->title('Valor Unitário'),
             6 => Column::make('caixa_fardo')->title('Caixa/Fardo')->class('text-right'),
             7 => Column::make('peso_liquido')->title('Peso Líquido')->class('text-right'),
             8 =>Column::make('armazenagem')->title('Armazenagem'),
