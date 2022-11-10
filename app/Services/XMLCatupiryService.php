@@ -123,7 +123,8 @@ class XMLCatupiryService extends XMLService
             'descricao' => $item['prod']['xProd'],
             'caixa_fardo' => $quantidade_caixa,
             'peso_liquido' => $peso_caixa_liquido,
-            'armazenagem' => $produto->conservacao
+            'armazenagem' => $produto->conservacao,
+            'valor_unitario' => isset($item['prod']['vUnCom']) ? floatval($item['prod']['vUnCom']) : null
         );
         return $retorno;
     }
