@@ -4,16 +4,14 @@ namespace App\Services;
 
 class XMLFactory
 {
-    private $services = [
-        1 => 'XMLTourinhoService',
-        2 => 'XMLCatupiryService',
-        3 => 'XMLDanoneService',
-        4 => 'XMLTourinhoService'
-    ];
-
-    public function service($industria)
+    /**
+     * Retorna o path do Service que irá importar o XML
+     *
+     * @param string $classe
+     * @return string
+     */
+    public function service(string $classe): string
     {
-        $classe = $this->services[$industria];
-        return "\App\Services\\$classe"; 
+        return "\App\Services\\$classe";
     }
 }

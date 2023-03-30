@@ -38,7 +38,8 @@ class XMLController extends Controller
 
     public static function getService($industria)
     {
-        $classe = (new XMLFactory)->service($industria);
+        $industria = Industria::find($industria);
+        $classe = (new XMLFactory)->service($industria->classe);
         return new $classe;
     }
 }

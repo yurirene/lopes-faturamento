@@ -12,10 +12,10 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class XMLTourinhoService extends XMLService
+class XMLDefaultService extends XMLService
 {
 
-    public static function importar($request, &$quantidade_importada)
+    public static function importar($request, &$quantidadeImportada)
     {
         try {
             $industria = Industria::find($request['industria']);
@@ -24,10 +24,10 @@ class XMLTourinhoService extends XMLService
                 $xml = self::converterXMLParaArray($arquivo);
                 if ($xml['emit']['CNPJ'] == $industria->cnpj && self::verificaSeJaFoiImportada($xml, $industria->id)) {
                     $notas[] = $xml;
-                    $quantidade_importada++;
-                }           
+                    $quantidadeImportada++;
+                }
             }
-            if ($quantidade_importada == 0) {
+            if ($quantidadeImportada == 0) {
                 throw new Exception('As notas não correspodem com a industria selecionada ou já foram importadas');
             }
             self::store($notas, $industria);
@@ -45,8 +45,8 @@ class XMLTourinhoService extends XMLService
                 $informacoes = self::informacoesNota($nota);
                 $informacoes['cliente_id'] = $cliente->id;
                 $informacoes['industria_id'] = $industria->id;
-                $nova_nota = Nota::create($informacoes);
-                self::salvarProdutos($nova_nota, $nota);
+                $novaNota = Nota::create($informacoes);
+                self::salvarProdutos($novaNota, $nota);
             }
             DB::commit();
         } catch (\Throwable $th) {
@@ -61,38 +61,47 @@ class XMLTourinhoService extends XMLService
      */
     public static function informacoesNota($nota)
     {
-        $fator = Frete::where('codigo', $nota['dest']['enderDest']['cMun'])->first()->fator;
-        $retorno = [
-            'numero' => $nota['ide']['nNF'],
+        $fator = 0;
+        if ($nota['dest']['enderDest']['cMun']) {
+            $fator = Frete::where('codigo', $nota['dest']['enderDest']['cMun'])->first()->fator;
+        }
+        $emissao = isset($nota['ide']['dhEmi'])
+            ? Carbon::createFromFormat('Y-m-d\TH:i:sP', $nota['ide']['dhEmi'])->format('Y-m-d')
+            : date('Y-m-d');
+        return [
+            'numero' => isset($nota['ide']['nNF']) ? $nota['ide']['nNF'] : '-',
             'pedido_cliente' => 'S/N',
-            'emissao' => Carbon::createFromFormat('Y-m-d\TH:i:sP', $nota['ide']['dhEmi'])->format('Y-m-d'),
-            'valor_bruto' => $nota['total']['ICMSTot']['vNF'],
-            'valor_liquido' => $nota['total']['ICMSTot']['vProd'],
-            'peso_liquido' => $nota['transp']['vol']['pesoL'],
-            'peso_bruto' => $nota['transp']['vol']['pesoB'],
-            'cidade_entrega' => $nota['dest']['enderDest']['xMun'],
-            'transportadora' => $nota['transp']['transporta']['xNome'],
-            'valor_frete' => floatval($nota['transp']['vol']['pesoB']) * floatval($fator)
+            'emissao' => $emissao,
+            'valor_bruto' => isset($nota['total']['ICMSTot']['vNF']) ? $nota['total']['ICMSTot']['vNF'] : '0',
+            'valor_liquido' => isset($nota['total']['ICMSTot']['vProd']) ? $nota['total']['ICMSTot']['vProd'] : '0',
+            'peso_liquido' => isset($nota['transp']['vol']['pesoL']) ? $nota['transp']['vol']['pesoL'] : '0',
+            'peso_bruto' => isset($nota['transp']['vol']['pesoB']) ? $nota['transp']['vol']['pesoB'] : '0',
+            'cidade_entrega' => isset($nota['dest']['enderDest']['xMun']) ? $nota['dest']['enderDest']['xMun'] : '0',
+            'transportadora' => isset($nota['transp']['transporta']['xNome']) ? $nota['transp']['transporta']['xNome'] : '0',
+            'valor_frete' => floatval(
+                isset($nota['transp']['vol']['pesoB'])
+                ? $nota['transp']['vol']['pesoB']
+                : 0
+            ) * floatval($fator)
         ];
-        return $retorno;
     }
 
     /**
      * Salva produtos registrados na nota
      */
-    public static function salvarProdutos($nova_nota, $nota)
+    public static function salvarProdutos($novaNota, $nota)
     {
         DB::beginTransaction();
         try {
             $itens = data_get($nota, 'det');
             if (array_key_exists('prod', $itens)) {
                 $informacoes = self::informacoesProduto($itens);
-                $informacoes['nota_id'] = $nova_nota->id;
+                $informacoes['nota_id'] = $novaNota->id;
                 ItensNota::create($informacoes);
             } else {
                 foreach ($itens as $item) {
                     $informacoes = self::informacoesProduto($item);
-                    $informacoes['nota_id'] = $nova_nota->id;
+                    $informacoes['nota_id'] = $novaNota->id;
                     ItensNota::create($informacoes);
                 }
             }
@@ -102,7 +111,7 @@ class XMLTourinhoService extends XMLService
             throw $th;
         }
     }
-    
+
     /**
      * Retorna a informações necessárias para à Model\ItensNota
      */
@@ -113,18 +122,17 @@ class XMLTourinhoService extends XMLService
         $armazenagem = '';
         if (strstr($item['prod']['xProd'], ' LT ')) {
             $armazenagem = 'AMBIENTE';
-        } else if (strstr($item['prod']['xProd'], ' PT ')) {
+        } elseif (strstr($item['prod']['xProd'], ' PT ')) {
             $armazenagem = 'REFRIGERADO';
         }
-        
-        $retorno = array(
-            'codigo_produto' => $item['prod']['cProd'],
-            'descricao' => $item['prod']['xProd'],
-            'caixa_fardo' => $item['prod']['qCom'],
+
+        return [
+            'codigo_produto' => isset($item['prod']['cProd']) ? $item['prod']['cProd'] : 0,
+            'descricao' => isset($item['prod']['xProd']) ? $item['prod']['xProd'] : 0,
+            'caixa_fardo' => isset($item['prod']['qCom']) ? $item['prod']['qCom'] : 0,
             'armazenagem' => $armazenagem,
             'valor_unitario' => isset($item['prod']['vUnCom']) ? floatval($item['prod']['vUnCom']) : null
-        );
-        return $retorno;
+        ];
     }
-     
+
 }

@@ -23,7 +23,7 @@ class IndustriasDatatable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            
+
             ->addColumn('action', function($query) {
                 return '<div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton' . $query->id . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -65,7 +65,12 @@ class IndustriasDatatable extends DataTable
                         "language" => [
                             "url" => "//cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json"
                         ],
-                        'buttons' => []
+                        'buttons' => [
+                            [
+                                'extend' => 'create',
+                                'text' => 'Nova Industria'
+                            ]
+                        ]
                     ]);
     }
 

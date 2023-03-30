@@ -9,7 +9,7 @@ Route::get('/', 'Auth\LoginController@showLoginForm');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/inicio', 'HomeController@index')->name('home');
-    
+
     Route::get('/dados-cadastrais', 'DadosCadastraisController@index')->name('dados-cadastrais.index');
     Route::get('/dados-cadastrais/importar', 'DadosCadastraisController@importar')->name('dados-cadastrais.importar');
     Route::post('/dados-cadastrais/importar', 'DadosCadastraisController@importarPlanilha')->name('dados-cadastrais.importar-planilha');
@@ -40,14 +40,14 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('clientes', 'ClienteController')->except(['destroy']);
     Route::get('/clientes/{cliente}/delete', 'ClienteController@delete')->name('clientes.delete');
 
-    Route::resource('industrias', 'IndustriaController')->except(['destroy', 'store', 'create', 'show']);
+    Route::resource('industrias', 'IndustriaController')->except(['destroy', 'show']);
 
     Route::resource('fretes', 'FreteController')->except(['destroy']);
     Route::get('/fretes/{frete}/delete', 'FreteController@delete')->name('fretes.delete');
 
     Route::get('/frete-danone', 'FreteDanoneController@index')->name('frete-danone.index');
     Route::put('/frete-danone/{frete}', 'FreteDanoneController@salvar')->name('frete-danone.salvar');
-    
+
 
 
 });
