@@ -32,6 +32,7 @@ class IndustriaController extends Controller
             $industria->update([
                 'razao_social' => $request->razao_social,
                 'cidade' => $request->cidade,
+                'cnpj' => $request->cnpj
             ]);
             return redirect()->route('industrias.index')->with(['mensagem' => 'Operação Realizada com Sucesso!']);
         } catch (\Throwable $th) {
